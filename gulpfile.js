@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     cssnano = require('gulp-cssnano'),
     sourcemaps = require('gulp-sourcemaps'),
     runSequence = require('run-sequence'),
+    minifyHTML = require('gulp-minify-html'),
     package = require('./package.json');
 
 
@@ -78,5 +79,19 @@ gulp.task('default', ['css', 'js', 'browser-sync'], function () {
 // builds for production
 gulp.task('build', function (cb) {
   mode = PRODUCTION;
-  runSequence(['css', 'js'], cb);
+  runSequence(['css', 'js'], 'docs', 'optimize', cb);
 });
+
+gulp.task('docs', function() {
+  gulp.src('app/**/*')
+    .pipe(gulp.dest('docs'));
+});
+
+gulp.task('optimize', function() {
+  gulp.src('docs/**/*.html')
+    .pipe(minifyHTML({
+      conditionals: true,
+      spare:true,
+    }))
+    .pipe(gulp.dest('docs'));
+})

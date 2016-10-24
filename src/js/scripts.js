@@ -71,7 +71,7 @@
       if ($(scrollers[i][0])[0].scrollWidth === $(scrollers[i][0]).outerWidth()) {
         $(scrollers[i][1]).addClass('hide-left hide-right');
       }
-      $(scrollers[i][0]).on('scroll', function(e) {
+      $(scrollers[i][0]).on('scroll', function() {
         updateScrollContainer(scrollers[i][0], scrollers[i][1]);
       });
     }
@@ -81,7 +81,7 @@
     if (!window.YT) {
       // Load the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/player_api";
+      tag.src = 'https://www.youtube.com/player_api';
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
@@ -132,12 +132,12 @@
   function startGifs() {
     window._giphy = window._giphy || [];
     if (window._giphy.length < 1) {
-      window._giphy.push({id: "3oz8xC3irvW5bohdAY",w: 480, h: 270});
-      var g = document.createElement("script");
-      g.type = "text/javascript";
+      window._giphy.push({id: '3oz8xC3irvW5bohdAY',w: 480, h: 270});
+      var g = document.createElement('script');
+      g.type = 'text/javascript';
       g.async = true;
-      g.src = ("https:" == document.location.protocol ? "https://" : "http://") + "giphy.com/static/js/widgets/embed.js";
-      var s = document.getElementsByTagName("script")[0];
+      g.src = ('https:' === document.location.protocol ? 'https://' : 'http://') + 'giphy.com/static/js/widgets/embed.js';
+      var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(g, s);
     }
   }
