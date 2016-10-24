@@ -41,7 +41,7 @@ gulp.task('css', function () {
     .pipe(header(banner, { package : package }))
     .pipe(mode === DEV ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest('app/assets/css', { overwrite: true }))
-    .pipe(browserSync.reload({stream:true}));
+    .pipe(mode === DEV ? browserSync.reload({stream:true}) : gutil.noop());
 });
 
 gulp.task('js',function(){
