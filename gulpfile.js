@@ -10,7 +10,7 @@ var gulp = require('gulp'),
     cssnano = require('gulp-cssnano'),
     sourcemaps = require('gulp-sourcemaps'),
     runSequence = require('run-sequence'),
-    minifyHTML = require('gulp-minify-html'),
+    htmlmin = require('gulp-htmlmin'),
     package = require('./package.json');
 
 
@@ -40,7 +40,7 @@ gulp.task('css', function () {
     .pipe(rename({ suffix: '.min' }))
     .pipe(header(banner, { package : package }))
     .pipe(mode === DEV ? sourcemaps.write() : gutil.noop())
-    .pipe(gulp.dest('app/assets/css'))
+    .pipe(gulp.dest('app/assets/css', { overwrite: true }))
     .pipe(browserSync.reload({stream:true}));
 });
 
@@ -55,7 +55,7 @@ gulp.task('js',function(){
     .pipe(header(banner, { package : package }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(mode === DEV ? sourcemaps.write() : gutil.noop())
-    .pipe(gulp.dest('app/assets/js'))
+    .pipe(gulp.dest('app/assets/js', { overwrite: true }))
     .pipe(browserSync.reload({stream:true, once: true}));
 });
 
@@ -83,15 +83,26 @@ gulp.task('build', function (cb) {
 });
 
 gulp.task('docs', function() {
-  gulp.src('app/**/*')
-    .pipe(gulp.dest('docs'));
+  gulp.src(['app/**/*', '!app/**/*.html'])
+    .pipe(gulp.dest('docs', { overwrite: true }));
 });
 
 gulp.task('optimize', function() {
-  gulp.src('docs/**/*.html')
-    .pipe(minifyHTML({
-      conditionals: true,
-      spare:true,
+  gulp.src('app/**/*.html')
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      collapseInlineTagWhitespace: false,
+      removeAttributeQuotes: true,
+      minifyJS: true,
+      minifyURLs: true,
+      removeComments: true,
+      removeRedundantAttributes: true,
+      removeOptionalTags: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      sortAttributes: true,
+      sortClassName: true,
+      useShortDoctype: true,
     }))
-    .pipe(gulp.dest('docs'));
+    .pipe(gulp.dest('docs', { overwrite: true }));
 })
