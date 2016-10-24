@@ -56,7 +56,7 @@ gulp.task('js',function(){
     .pipe(rename({ suffix: '.min' }))
     .pipe(mode === DEV ? sourcemaps.write() : gutil.noop())
     .pipe(gulp.dest('app/assets/js', { overwrite: true }))
-    .pipe(browserSync.reload({stream:true, once: true}));
+    .pipe(mode === DEV ? browserSync.reload({stream:true, once: true}) : gutil.noop());
 });
 
 gulp.task('browser-sync', function() {
