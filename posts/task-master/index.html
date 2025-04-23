@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Vibe Coding Meets Project Management | Charlie Hulcher</title>
+  
+  
+<meta name="title" content="Vibe Coding Meets Project Management | Charlie Hulcher">
+<meta name="description" content="LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey">
+<meta name="author" content="Charlie Hulcher">
+
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/posts/task-master/">
+<meta property="og:title" content="Vibe Coding Meets Project Management | Charlie Hulcher">
+<meta property="og:description" content="LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey">
+<meta property="og:image" content="http://localhost:1313/images/profile/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="localhost:1313">
+<meta property="twitter:url" content="http://localhost:1313/posts/task-master/">
+<meta name="twitter:title" content="Vibe Coding Meets Project Management | Charlie Hulcher">
+<meta name="twitter:description" content="LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey">
+<meta name="twitter:image" content="http://localhost:1313/images/profile/og-image.png">
+
+
+<link rel="canonical" href="http://localhost:1313/posts/task-master/">
+
+
+
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/task-master/">
+
+
+
+<meta property="article:published_time" content="2024-12-04T08:26:14-08:00">
+
+<meta property="article:modified_time" content="2024-12-04T08:26:14-08:00">
+
+
+<meta property="article:tags" content="programming, AI, SDLC">
+
+
+<meta property="article:author" content="Charlie Hulcher">
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  
+  "@type": "BlogPosting",
+  "headline": "Vibe Coding Meets Project Management",
+  "description": "LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey",
+  "author": {
+    "@type": "Person",
+    "name": "Charlie Hulcher",
+    "url": "https:\/\/charlie.engineer\/"
+  },
+  "datePublished": "2024-12-04T08:26:14-08:00",
+  "dateModified": "2024-12-04T08:26:14-08:00",
+  
+  "url": "http:\/\/localhost:1313\/posts\/task-master\/",
+  "keywords": "programming, AI, SDLC",
+  "publisher": {
+    "@type": "Person",
+    "name": "Charlie Hulcher"
+  }
+  
+}</script>
+
+
+
+<meta name="robots" content="noindex, nofollow">
+
+
+  
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="theme-color" content="#000000">
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  
+  
+</head>
+<body class="bg-black">
+  
+<div class="min-h-screen bg-black text-white font-mono">
+  <div class="max-w-3xl mx-auto px-4 py-12">
+    <nav class="mb-8">
+      <a href="/" class="inline-flex items-center text-zinc-400 hover:text-white transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Back to Home
+      </a>
+    </nav>
+
+    <article class="space-y-8">
+      <header class="space-y-4">
+        <h1 class="text-3xl md:text-4xl font-bold font-mono">Vibe Coding Meets Project Management</h1>
+        <div class="flex flex-col space-y-2">
+          <div class="flex items-center space-x-4 text-zinc-400">
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+              <time datetime="2024-12-04">12/2024</time>
+            </div>
+            
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>2 min read</span>
+            </div>
+            
+          </div>
+          
+          <div class="flex items-center flex-wrap gap-2">
+            
+            <a href="/tags/programming" class="text-xs bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white px-2 py-1 rounded transition-colors">programming</a>
+            
+            <a href="/tags/ai" class="text-xs bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white px-2 py-1 rounded transition-colors">AI</a>
+            
+            <a href="/tags/sdlc" class="text-xs bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white px-2 py-1 rounded transition-colors">SDLC</a>
+            
+          </div>
+          
+        </div>
+      </header>
+
+      
+        
+        
+      
+
+      <div class="prose prose-invert">
+        <blockquote>
+<p>LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey</p>
+</blockquote>
+<p>There’s so much more to the SDLC (Software Development Lifecycle) than “vibe coding”. While LLMs can generate code tokens super quickly, bottlenecks emerge: if we&rsquo;re shipping code more quickly, does planning and roadmap need to speed up? And after we&rsquo;ve written a ton of code with LLMs, how do we maintain code quality and confidence to ship through the release cycle? The good news is that today&rsquo;s LLMs appear capable of helping with those bottlenecks if we just build the harnesses for it.</p>
+<p>We tried out Taskmaster this week with Claude Code to bring task definition and organization to vibe coding.</p>
+<p>Taskmaster parses your product requirements into tasks that are pretty well tuned to what Claude 3.7 Sonnet can code end to end while under human supervision.</p>
+<p>Using taskmaster felt easier - it made task organization more consistent and higher quality without requiring as much prompt engineering expertise to achieve the same with manual prompting patterns.</p>
+<p>It feels useful for significant features that are too much to give to Claude Code in one go, and where you already have a clear product objective and technical design laid out in a PRD so there’s minimal mystery in what the LLM needs to build.</p>
+<p>It’s nice to see features like handling implementation drift - that was a key thing I needed to solve when I was building my own custom “knowledge agents” 6 months ago. Since pre-planned tasks never stay perfectly aligned with where the implementation leads, you need robust handling to keep tasks on track and not to confuse future LLM sessions.</p>
+<p>My approach was automated replanning - depending on the LLM to automatically reason about and improve task definitions after each step was completed. We’ll need super reliable tooling for this in order to reliably delegate larger projects to LLMs with less supervision overhead.</p>
+<p>Check out Taskmaster: <a href="https://github.com/eyaltoledano/claude-task-master">https://github.com/eyaltoledano/claude-task-master</a></p>
+
+      </div>
+    </article>
+
+    <footer class="mt-12 pt-8 border-t border-zinc-800">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          
+          <img src="/images/profile/avatar.png" alt="Charlie Hulcher" width="50" height="50" class="rounded-full grayscale">
+          <div>
+            <h3 class="font-bold font-mono">Charlie Hulcher</h3>
+            <p class="text-zinc-400 text-sm">Engineering Leader &amp; AI Researcher</p>
+          </div>
+          
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+
+</body>
+</html>

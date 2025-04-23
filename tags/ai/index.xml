@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on Charlie Hulcher</title>
+    <link>http://localhost:1313/tags/ai/</link>
+    <description>Recent content in AI on Charlie Hulcher</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+    
+    <copyright> 2024 Charlie Hulcher</copyright>
+    <lastBuildDate>Wed, 04 Dec 2024 08:26:14 -0800</lastBuildDate>
+    
+    <atom:link href="http://localhost:1313/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Replicating Claude Swe Bench</title>
+      <link>http://localhost:1313/posts/task-master/</link>
+      <pubDate>Wed, 04 Dec 2024 08:26:14 -0800</pubDate>
+      
+      <guid>http://localhost:1313/posts/task-master/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.anthropic.com/research/swe-bench-sonnet&#34;&gt;Anthropic recently released findings&lt;/a&gt; of using the updated Claude 3.5 Sonnet model to solve real world software engineering tasks. At the time, their published performance topped the leaderboard at 49%. What&amp;rsquo;s remarkable about their solution is how simple it was: they did not over-engineer an optimized solution, instead just giving AI some basic tools and letting it work on the problems.&lt;/p&gt;
+&lt;p&gt;This post details replicating their results.&lt;/p&gt;
+&lt;h2 id=&#34;the-evaluation-set&#34;&gt;The Evaluation Set&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified&#34;&gt;SWE Bench Verified&lt;/a&gt; is the set of tasks that Anthropic validated against. This set of 500 questions has been reviewed by humans to guarantee they are solvable.&lt;/p&gt;</description>
+      <category>programming,AI,</category>
+    </item>
+    
+    <item>
+      <title>Vibe Coding Meets Project Management</title>
+      <link>http://localhost:1313/drafts/replicating-claude-swe-bench/</link>
+      <pubDate>Wed, 04 Dec 2024 08:26:14 -0800</pubDate>
+      
+      <guid>http://localhost:1313/drafts/replicating-claude-swe-bench/</guid>
+      <description>&lt;p&gt;There’s so much more to the SDLC (Software Development Lifecycle) than “vibe coding”. While LLMs can generate code tokens super quickly, bottlenecks emerge: if we&amp;rsquo;re shipping code more quickly, does planning and roadmap need to speed up? And after we&amp;rsquo;ve written a ton of code with LLMs, how do we maintain code quality and confidence to ship through the release cycle? The good news is that today&amp;rsquo;s LLMs appear capable of helping with those bottlenecks if we just build the harnesses for it.&lt;/p&gt;</description>
+      <category>programming,AI,</category>
+    </item>
+    
+  </channel>
+</rss>
