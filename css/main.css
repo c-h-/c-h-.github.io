@@ -1346,6 +1346,14 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.hide-on-mobile {
+  display: none;
+}
+@media (min-width: 768px) {
+    .hide-on-mobile {
+    display: block;
+  }
+  }
 
 header {
   margin-bottom: 1rem;
