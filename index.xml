@@ -1,78 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Home on Charlie Hulcher</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content in Home on Charlie Hulcher</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-    
-    <copyright> 2025 Charlie Hulcher</copyright>
-    <lastBuildDate>Fri, 15 Nov 2024 09:46:52 -0800</lastBuildDate>
-    
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Replicating Claude Swe Bench</title>
-      <link>http://localhost:1313/drafts/replicating-claude-swe-bench/</link>
-      <pubDate>Wed, 04 Dec 2024 08:26:14 -0800</pubDate>
-      
-      <guid>http://localhost:1313/drafts/replicating-claude-swe-bench/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://www.anthropic.com/research/swe-bench-sonnet&#34;&gt;Anthropic recently released findings&lt;/a&gt; of using the updated Claude 3.5 Sonnet model to solve real world software engineering tasks. At the time, their published performance topped the leaderboard at 49%. What&amp;rsquo;s remarkable about their solution is how simple it was: they did not over-engineer an optimized solution, instead just giving AI some basic tools and letting it work on the problems.&lt;/p&gt;
-&lt;p&gt;This post details replicating their results.&lt;/p&gt;
-&lt;h2 id=&#34;the-evaluation-set&#34;&gt;The Evaluation Set&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://huggingface.co/datasets/princeton-nlp/SWE-bench_Verified&#34;&gt;SWE Bench Verified&lt;/a&gt; is the set of tasks that Anthropic validated against. This set of 500 questions has been reviewed by humans to guarantee they are solvable.&lt;/p&gt;</description>
-      <category>programming,AI,</category>
-    </item>
-    
-    <item>
-      <title>Vibe Coding Meets Project Management</title>
-      <link>http://localhost:1313/posts/task-master/</link>
-      <pubDate>Wed, 04 Dec 2024 08:26:14 -0800</pubDate>
-      
-      <guid>http://localhost:1313/posts/task-master/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;There’s so much more to the SDLC (Software Development Lifecycle) than “vibe coding”. While LLMs can generate code tokens super quickly, bottlenecks emerge: if we&amp;rsquo;re shipping code more quickly, does planning and roadmap need to speed up? And after we&amp;rsquo;ve written a ton of code with LLMs, how do we maintain code quality and confidence to ship through the release cycle? The good news is that today&amp;rsquo;s LLMs appear capable of helping with those bottlenecks if we just build the harnesses for it.&lt;/p&gt;</description>
-      <category>programming,AI,SDLC,</category>
-    </item>
-    
-    <item>
-      <title>Coding is Creative</title>
-      <link>http://localhost:1313/posts/coding-is-creative/</link>
-      <pubDate>Sat, 09 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/posts/coding-is-creative/</guid>
-      <description>&lt;p&gt;When you think about programming (or coding), you might not consider it to be a creative pursuit. That’s a viewpoint that I, as a coder, was very confused by, because I see it as one of the better avenues for creativity available today.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home on Charlie Hulcher</title><link>https://charlie.engineer/</link><description>Recent content in Home on Charlie Hulcher</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright> 2025 Charlie Hulcher</copyright><lastBuildDate>Fri, 15 Nov 2024 09:46:52 -0800</lastBuildDate><atom:link href="https://charlie.engineer/index.xml" rel="self" type="application/rss+xml"/><item><title>OrgLoop: Organization as Code for Autonomous AI Organizations</title><link>https://charlie.engineer/posts/orgloop-organization-as-code/</link><pubDate>Tue, 24 Feb 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/orgloop-organization-as-code/</guid><description>&lt;h1 id="orgloop-organization-as-code-for-autonomous-ai-organizations"&gt;OrgLoop: Organization as Code for Autonomous AI Organizations&lt;/h1&gt;
+&lt;p&gt;OrgLoop is an open-source runtime that wires your AI agents together with declarative event routing, so the organization keeps moving without you being the one holding it all together.&lt;/p&gt;
+&lt;h2 id="the-problem-nobody-warned-me-about"&gt;The Problem Nobody Warned Me About&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.&lt;/p&gt;</description><category>ai,engineering,open-source,infrastructure,</category></item><item><title>Coding is Creative</title><link>https://charlie.engineer/posts/coding-is-creative/</link><pubDate>Sat, 09 Apr 2016 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/coding-is-creative/</guid><description>&lt;p&gt;When you think about programming (or coding), you might not consider it to be a creative pursuit. That’s a viewpoint that I, as a coder, was very confused by, because I see it as one of the better avenues for creativity available today.&lt;/p&gt;
 &lt;p&gt;I hope this piece changes the way you think about programming and encourages further exploration.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Programming as a creative outlet can be understood by comparing it to traditional artistic pursuit.&lt;/p&gt;</description>
-      <category>programming,thought,</category>
-    </item>
-    
-    <item>
-      <title>Grand Prize at LA Hacks - Virtual Reality Treadmill</title>
-      <link>http://localhost:1313/posts/la-hacks-tred/</link>
-      <pubDate>Sun, 13 Apr 2014 08:27:58 -0800</pubDate>
-      
-      <guid>http://localhost:1313/posts/la-hacks-tred/</guid>
-      <description>&lt;p&gt;We won the &lt;a href=&#34;https://www.laweekly.com/ucla-hosts-biggest-hackathon-in-history/&#34;&gt;&amp;ldquo;largest hackathon in history&amp;rdquo;&lt;/a&gt;: the Grand Prize at LA Hacks. Built over 36 hours with our team of three, our treadmill captures user movement and translates it into motion in any virtual reality world. It was designed to be low-cost, widely compatible, and high-performance.&lt;/p&gt;
-&lt;p&gt;As the user moves across the surface of the treadmill, low cost sensors activate from pressure, and an Arduino clusters the inputs to interpret the user&amp;rsquo;s motion (direction and intent - standing, walking, running). Those clusters are sent as keyboard button presses to the computer running the virtual reality world. The user wears an Oculus Rift.&lt;/p&gt;</description>
-      <category>programming,competition,arduino,</category>
-    </item>
-    
-    <item>
-      <title>Autonomous Hovercraft</title>
-      <link>http://localhost:1313/posts/autonomous-hovercraft/</link>
-      <pubDate>Fri, 04 May 2012 08:50:26 -0800</pubDate>
-      
-      <guid>http://localhost:1313/posts/autonomous-hovercraft/</guid>
-      <description>&lt;p&gt;We won the University of Maryland Clark School of Engineering semester-long freshman competition, which puts all freshman engineering students into teams to navigate a course and retrieve a payload by building an autonomous hovercraft. I led our team of ten, and focused on circuitry and programming. From mechanical design, circuitry, and autonomous sensing, navigation, and actuation, our hovercraft was the fastest and completed the most objectives.&lt;/p&gt;</description>
-      <category>programming,arduino,competition,</category>
-    </item>
-    
-  </channel>
-</rss>
+&lt;p&gt;Programming as a creative outlet can be understood by comparing it to traditional artistic pursuit.&lt;/p&gt;</description><category>programming,thought,</category></item><item><title>Grand Prize at LA Hacks - Virtual Reality Treadmill</title><link>https://charlie.engineer/posts/la-hacks-tred/</link><pubDate>Sun, 13 Apr 2014 08:27:58 -0800</pubDate><guid>https://charlie.engineer/posts/la-hacks-tred/</guid><description>&lt;p&gt;We won the &lt;a href="https://www.laweekly.com/ucla-hosts-biggest-hackathon-in-history/"&gt;&amp;ldquo;largest hackathon in history&amp;rdquo;&lt;/a&gt;: the Grand Prize at LA Hacks. Built over 36 hours with our team of three, our treadmill captures user movement and translates it into motion in any virtual reality world. It was designed to be low-cost, widely compatible, and high-performance.&lt;/p&gt;
+&lt;p&gt;As the user moves across the surface of the treadmill, low cost sensors activate from pressure, and an Arduino clusters the inputs to interpret the user&amp;rsquo;s motion (direction and intent - standing, walking, running). Those clusters are sent as keyboard button presses to the computer running the virtual reality world. The user wears an Oculus Rift.&lt;/p&gt;</description><category>programming,competition,arduino,</category></item><item><title>Autonomous Hovercraft</title><link>https://charlie.engineer/posts/autonomous-hovercraft/</link><pubDate>Fri, 04 May 2012 08:50:26 -0800</pubDate><guid>https://charlie.engineer/posts/autonomous-hovercraft/</guid><description>&lt;p&gt;We won the University of Maryland Clark School of Engineering semester-long freshman competition, which puts all freshman engineering students into teams to navigate a course and retrieve a payload by building an autonomous hovercraft. I led our team of ten, and focused on circuitry and programming. From mechanical design, circuitry, and autonomous sensing, navigation, and actuation, our hovercraft was the fastest and completed the most objectives.&lt;/p&gt;</description><category>programming,arduino,competition,</category></item></channel></rss>
