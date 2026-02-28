@@ -1,0 +1,373 @@
+# Charlie Hulcher
+
+> Engineering leader and AI researcher. Founding engineer at Kindo, building agent orchestration infrastructure. Writing about AI systems, autonomous organizations, and the craft of engineering.
+
+## agentctl: Headless Orchestration for Coding Agents
+
+URL: https://charlie.engineer/posts/agentctl/
+
+
+I built a CLI that wraps coding agents for headless orchestration.
+
+![agentctl architecture](agent-ctl-architecture.png)
+
+![agentctl terminal](agentctl-terminal.png)
+
+## The friction of going headless
+
+I've been running coding agents headlessly as my primary way of writing software. Not as a side experiment, but as the default. And the friction points became obvious fast.
+
+You launch a Claude Code session, move on to something else, and forget what it's doing. You launch another session in the same directory without realizing it, and they clobber each other's work. You hear about a new model or a new agent tool, but the switching cost is high enough that you just stick with what works. Why bother?
+
+Then there's the supervision layer. I have AI agents that supervise my coding agents: launching sessions, checking progress, reacting when work finishes. For that to work, I need clean tooling that serves both humans and the agents doing the supervising.
+
+So I built agentctl. It's alpha, but a few folks have been daily driving it for weeks now.
+
+## What it is
+
+agentctl is a lightweight CLI that wraps whatever coding agent you use and gives you a standard set of commands to manage headless sessions. It's not a replacement for `claude` or any other agent CLI. It's the supervisory layer that sits on top.
+
+The core idea: agentctl reads from native sources. It doesn't maintain its own session registry. The Claude Code adapter reads `~/.claude/projects/` and cross-references running processes. The Pi adapter reads Pi's session files. This means agentctl always reflects ground truth about what's actually running on your machine.
+
+```bash
+npm install -g @orgloop/agentctl
+```
+
+## Getting started
+
+The basics are simple:
+
+```bash
+# See everything running on your system
+agentctl list
+
+# Include completed sessions from the last 7 days
+agentctl list -a
+
+# Check what an agent is doing
+agentctl peek <session-id>
+
+# Launch a new session
+agentctl launch -p "Read the spec and implement phase 2"
+
+# Stop a session
+agentctl stop <session-id>
+
+# Resume with new instructions
+agentctl resume <session-id> "fix the failing tests"
+```
+
+Session IDs support prefix matching, so you only need enough characters to be unique.
+
+## Directory locking
+
+One of the first problems I hit was accidentally launching two agents in the same repo. agentctl tracks which directories have active sessions and prevents conflicting launches.
+
+```bash
+# Agents automatically lock their working directory on launch.
+# Manual locks work too, for when a human is working:
+agentctl lock ~/code/my-project --by charlie --reason "manual debugging"
+
+# See all active locks
+agentctl locks
+```
+
+Manual locks let a human claim a directory and hold it as long as they want. No agent will launch there until the lock is cleared.
+
+## Lifecycle hooks
+
+Hooks let you wire agentctl into the rest of your workflow. They're shell commands that fire at specific points in a session's lifecycle:
+
+```bash
+agentctl launch -p "implement feature X" \
+  --on-create "echo 'Session $AGENTCTL_SESSION_ID started'" \
+  --on-complete "npm test"
+```
+
+Available hooks:
+
+- `--on-create`: fires after worktree creation but before the agent launches. This is where you bootstrap the environment: `mise trust`, `yarn install`, seed a test database, whatever the agent needs before it starts working.
+- `--on-complete`: fires when the session finishes. Run tests, send alerts, trigger the next step.
+- `--pre-merge`: fires before `agentctl merge` commits. Lint, test, validate.
+- `--post-merge`: fires after merge pushes or opens a PR. Notify, trigger CI.
+
+```bash
+agentctl launch -p "implement feature X" \
+  --worktree \
+  --on-create "cd $AGENTCTL_CWD && mise trust && yarn install" \
+  --on-complete "npm test"
+```
+
+Hook scripts receive context through environment variables: `AGENTCTL_SESSION_ID`, `AGENTCTL_CWD`, `AGENTCTL_ADAPTER`, `AGENTCTL_BRANCH`, and `AGENTCTL_EXIT_CODE`.
+
+## The sweep pattern
+
+This is the feature I'm most excited about. You can launch the same task across different agents, models, and configurations, each in its own git worktree, fully independent.
+
+Want to know if Claude Opus or Sonnet does a better job on your refactor? Or whether Codex handles it differently than Claude Code? One command:
+
+```bash
+agentctl launch \
+  --adapter claude-code --model claude-opus-4-6 \
+  --adapter claude-code --model claude-sonnet-4-5 \
+  --adapter codex \
+  -p "refactor the auth module"
+```
+
+Each gets its own branch and worktree. No conflicts. When they finish, you compare the results and pick the winner. The switching cost drops to nearly zero.
+
+For more complex sweeps, a YAML matrix file gives you full expressiveness over parameters.
+
+## Adapters
+
+agentctl supports multiple agent runtimes through an adapter model:
+
+- **Claude Code** (default): reads from `~/.claude/projects/`, cross-references running processes.
+- **Codex CLI**: reads from `~/.codex/sessions/`, supports `codex exec` for headless mode.
+- **OpenCode**: reads from `~/.local/share/opencode/storage/`, supports `opencode run`.
+- **Pi**: reads from `~/.pi/agent/sessions/`, uses Pi's print mode for headless execution.
+- **OpenClaw**: connects to the OpenClaw gateway via WebSocket RPC (read-only).
+
+Adding a new adapter means implementing the `AgentAdapter` interface. The CLI and daemon don't change.
+
+## Integration with OrgLoop
+
+agentctl fits into a larger picture. In my setup, it's one layer of three:
+
+| Layer | Role |
+|-------|------|
+| **agentctl** | Read/control interface. Discovers sessions, emits lifecycle events. |
+| **OrgLoop** | Routes lifecycle events to mechanical reactions. |
+| **OpenClaw** | Reasoning layer. Makes judgment calls. |
+
+agentctl streams lifecycle events as NDJSON:
+
+```bash
+agentctl events --json
+```
+
+```json
+{"type":"session.stopped","adapter":"claude-code","sessionId":"abc123","timestamp":"2025-06-15T11:00:00.000Z","session":{...}}
+```
+
+OrgLoop consumes these events and routes them to reactions. A session completes, OrgLoop checks the result, and an OpenClaw agent decides what to do next: re-launch with different instructions, open a PR, or flag it for human review.
+
+This event-driven pattern means agentctl stays simple. It doesn't need to know what should happen when a session finishes. It just says what happened, and the layers above decide.
+
+## Fuse timers
+
+When running agents in worktree-per-branch workflows with Kind clusters, forgotten clusters accumulate. Fuse timers handle this automatically: when a session exits, agentctl starts a countdown. If no new session starts in that directory before the timer expires, the associated cluster gets deleted.
+
+```bash
+# See active fuses
+agentctl fuses
+```
+
+Small feature, but it's saved me from more than a few resource leaks.
+
+## The daemon
+
+agentctl runs a lightweight daemon that provides session tracking, directory locks, fuse timers, and Prometheus metrics. It auto-starts on your first command and can be installed as a macOS LaunchAgent for persistence:
+
+```bash
+agentctl daemon install    # Auto-start on login
+agentctl daemon status     # Check health
+```
+
+Prometheus metrics are exposed at `localhost:9200/metrics` for monitoring active sessions, lock counts, session durations, and fuse activity.
+
+## Where this is heading
+
+I believe headless coding agents will become the default path sooner than most people expect. Not that interactive sessions go away, but that the majority of code written will come from headless agents. agentctl is the supervision layer I needed to make that work, and it's a piece of what I've been building toward: organizations as code for autonomous intelligence scaling.
+
+Open source, MIT licensed. Try it out:
+
+```bash
+npm install -g @orgloop/agentctl
+```
+
+GitHub: [github.com/orgloop/agentctl](https://github.com/orgloop/agentctl)
+
+---
+
+## Autonomous Hovercraft
+
+URL: https://charlie.engineer/posts/autonomous-hovercraft/
+
+
+We won the University of Maryland Clark School of Engineering semester-long freshman competition, which puts all freshman engineering students into teams to navigate a course and retrieve a payload by building an autonomous hovercraft. I led our team of ten, and focused on circuitry and programming. From mechanical design, circuitry, and autonomous sensing, navigation, and actuation, our hovercraft was the fastest and completed the most objectives.
+
+---
+
+## Grand Prize at LA Hacks - Virtual Reality Treadmill
+
+URL: https://charlie.engineer/posts/la-hacks-tred/
+
+
+We won the ["largest hackathon in history"](https://www.laweekly.com/ucla-hosts-biggest-hackathon-in-history/): the Grand Prize at LA Hacks. Built over 36 hours with our team of three, our treadmill captures user movement and translates it into motion in any virtual reality world. It was designed to be low-cost, widely compatible, and high-performance.
+
+As the user moves across the surface of the treadmill, low cost sensors activate from pressure, and an Arduino clusters the inputs to interpret the user's motion (direction and intent - standing, walking, running). Those clusters are sent as keyboard button presses to the computer running the virtual reality world. The user wears an Oculus Rift.
+
+---
+
+## OrgLoop: Organization as Code for Autonomous AI Organizations
+
+URL: https://charlie.engineer/posts/orgloop-organization-as-code/
+
+
+OrgLoop is an open-source runtime that wires your AI agents together with declarative event routing, so the organization keeps moving without you being the one holding it all together.
+
+## The Problem Nobody Warned Me About
+
+I'm running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.
+
+The part that kept breaking was everything between agent sessions.
+
+A PR gets review comments at midnight. Nobody notices until I check in the morning. CI fails at 2am and sits red for hours. Claude Code finishes a feature overnight and the output just... sits there. A Linear ticket gets updated and no agent reacts because no agent is watching.
+
+I was the coordination layer. The human router. Checking GitHub, nudging agents, remembering what's in flight, bridging context between sessions. Every morning started with the same ritual: check which agents finished overnight, see if any PRs got stuck, notice the CI failure from 3am, remember what Linear tickets were in flight, figure out which Claude Code session needs relaunching.
+
+I had scripts, cron jobs, LaunchAgent plists, custom pollers. A whole pile of glue code that sort of worked until it didn't. And it didn't scale. One agent, you can manage manually. Two, it's tight. At scale, you're not managing agents anymore. You're just running a very slow, error-prone event loop in your head.
+
+The frustrating thing is that the agents' judgment is good enough. With the right context and the right instructions, they handle these situations well. The problem was getting the right event to the right agent at the right time with the right instructions. That's a systems problem, not an intelligence problem.
+
+## How I Got Here
+
+I kept trying to fix this inside the agents themselves. Bigger system prompts with more SOPs. More heartbeat checks. More agents, each watching a narrower slice. None of it stuck.
+
+The heartbeat approach is like having your team members wander around the building periodically, hoping they stumble across something that needs attention. Sometimes they do, sometimes they don't. Things that happen between patrols get missed.
+
+Then I noticed this was the same shape as a problem infrastructure engineers solved years ago. We went from SSH'ing into servers and running commands to Infrastructure as Code. Terraform, CloudFormation, Pulumi. Declarative, version-controlled, reproducible. Nobody manages servers imperatively anymore.
+
+AI organizations are in that pre-IaC phase right now. Scripts, tribal knowledge, manual coordination. It works for one person running a few agents. It breaks down the moment you scale.
+
+I started calling the pattern Organization as Code.
+
+## Five Primitives
+
+The whole thing fits in five concepts:
+
+**Sources** emit events. GitHub pushes a PR review, Linear updates a ticket, Claude Code finishes a session, a cron schedule fires. These are the things that happen in your organization.
+
+**Actors** do work. An OpenClaw agent, a Claude Code instance, a Docker container. These are the things that respond.
+
+**Routes** wire sources to actors. When event X happens, wake actor Y with instructions Z. This is the topology of your organization, declared in YAML instead of living in scripts and someone's head.
+
+**Transforms** sit in the pipeline between source and actor. Filter bot noise, deduplicate events, enrich payloads with additional context. Mechanical steps that don't need judgment.
+
+**Loggers** observe everything. Every event, every transform, every delivery, traced and recorded. When something goes wrong (it will), you can see exactly what happened.
+
+Read the YAML and you can see the entire operational topology of your organization. That's the point. No more guessing which script handles what, or whether anyone is watching CI.
+
+## How It Works in Practice
+
+Here's a real route from my setup:
+
+```yaml
+routes:
+  - name: pr-review
+    when:
+      source: github
+      events: [pull_request_review]
+    then:
+      actor: engineering-agent
+    with:
+      prompt_file: "./sops/pr-review.md"
+```
+
+When GitHub emits a PR review event, OrgLoop matches it to this route and wakes my engineering agent with a focused SOP specifically for handling PR reviews. The agent doesn't see CI failure instructions. It doesn't see the ticket triage playbook. One event, one focused instruction set.
+
+This turned out to be a big deal. I had been cramming every possible instruction into one big system prompt, hoping the agent would apply the right SOP to whatever situation it found. Sometimes it did. Often it picked the wrong one, or tried to do three things at once.
+
+The route decides what context the agent needs, not the agent. If you've used OpenClaw Skills (focused context loaded on demand instead of everything crammed into MCP), this is the same pattern one layer up.
+
+Here's the part that makes it recursive: when an actor finishes, that completion is itself an event. My supervisor evaluates what Claude Code produced, decides whether to relaunch for another iteration or move on, and that decision fires its own event. The system sustains itself through continuous cycles.
+
+The org loops.
+
+My current setup has nine active routes covering PR reviews, PR comments, CI failures, Linear ticket triage, Gmail triage, Claude Code supervision, cluster management, integration grooming, and weekly product updates. One daemon process replaced about a dozen scattered scripts and cron jobs.
+
+A concrete example of the loop in action: Claude Code finishes implementing a feature at 2am. That session completion fires an event. OrgLoop matches it to the supervisor route. The supervisor agent wakes up with an SOP that says "evaluate the output, check if the spec is complete, relaunch if there's more work." The supervisor decides to relaunch for test coverage. That relaunch fires another event. Claude Code runs tests, finishes, fires another completion event. The supervisor evaluates again, sees the spec is done, and updates the tracking ticket. All of this happened while I was asleep. I wake up to a finished feature with tests, committed and ready for review.
+
+Before OrgLoop, that same sequence would have stalled at step one. Claude Code finishes at 2am. Nobody notices until I check in the morning. I read the output, decide it needs tests, relaunch manually, wait, check again. Half a day lost to gaps that didn't need to exist.
+
+## Getting Started
+
+```bash
+npm install -g @orgloop/cli
+mkdir my-org && cd my-org
+orgloop init
+npm install
+orgloop start
+```
+
+`orgloop init` walks you through picking your sources and actors. Start simple. One source (maybe GitHub), one actor (your agent), one route. Get the loop running and watch events flow through.
+
+```bash
+orgloop status    # See what's running
+orgloop routes    # Visualize the routing topology
+orgloop logs      # Watch events in real time
+orgloop doctor    # Validate config and connectivity
+```
+
+Send a test event to see it work:
+
+```bash
+curl -X POST http://localhost:4800/webhook/webhook \
+  -H "Content-Type: application/json" \
+  -d '{"type": "test", "message": "hello from orgloop"}'
+```
+
+That's the core loop: source emits, route matches, actor delivers, logger observes.
+
+When you're ready to scale up, there are pre-built connectors for GitHub, Linear, Claude Code, OpenClaw, Google Calendar, Gmail, Docker, and more. Each one is its own npm package (`@orgloop/connector-github`, `@orgloop/connector-linear`, etc.) so you only install what you need.
+
+## The Vision: Your Organization as a Codebase
+
+The thing I keep coming back to is that the interesting problem isn't any individual agent. It's the system around them. Human organizations figured this out a long time ago. You don't make the organization work by making every employee perfect. You build processes, handoffs, escalation paths. The system compensates for individual unreliability.
+
+AI agents forget, idle, rabbit-hole, drop context. That's fine. OrgLoop doesn't fix the agents. It makes the system reliable. Your org's operational topology lives in version control. You can review it, diff it, roll it back. New team member joins? They can read the YAML and understand how everything connects. You can `orgloop plan` before `orgloop start` and see exactly what will change, Terraform-style.
+
+Five primitives. One config file. You can read the whole thing and understand how your organization works. When something breaks, you can trace the event through the log and see exactly where it went wrong. When you want to add a new workflow, you add a route and an SOP. No new scripts, no new cron jobs.
+
+I think every team running more than a couple of AI agents is going to need something like this. Not necessarily OrgLoop specifically, but the pattern: declarative routing, focused SOPs, event-driven actor wakeup, recursive loops. The paradigm is bigger than any one tool.
+
+## Try It
+
+OrgLoop is open source (MIT), written in TypeScript, and running in production. It's early alpha days. The concepts have been running my engineering organization since January 2026, and the framework is being extracted and formalized from that system.
+
+If you're running agents and feeling the coordination weight, give it a look.
+
+GitHub: [github.com/orgloop/orgloop](https://github.com/orgloop/orgloop)
+Docs: [orgloop.ai](https://orgloop.ai)
+npm: `npm install -g @orgloop/cli`
+
+If you try it or have questions, find me on X ([@chulcher](https://x.com/chulcher)) or open an issue on the repo. I'm genuinely curious what other people's agent topologies look like.
+
+---
+
+## Vibe Coding Meets Project Management
+
+URL: https://charlie.engineer/posts/task-master/
+
+
+> LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey
+
+There’s so much more to the SDLC (Software Development Lifecycle) than “vibe coding”. While LLMs can generate code tokens super quickly, bottlenecks emerge: if we're shipping code more quickly, does planning and roadmap need to speed up? And after we've written a ton of code with LLMs, how do we maintain code quality and confidence to ship through the release cycle? The good news is that today's LLMs appear capable of helping with those bottlenecks if we just build the harnesses for it.
+
+We tried out Taskmaster this week with Claude Code to bring task definition and organization to vibe coding. 
+
+Taskmaster parses your product requirements into tasks that are pretty well tuned to what Claude 3.7 Sonnet can code end to end while under human supervision. 
+
+Using taskmaster felt easier - it made task organization more consistent and higher quality without requiring as much prompt engineering expertise to achieve the same with manual prompting patterns. 
+
+It feels useful for significant features that are too much to give to Claude Code in one go, and where you already have a clear product objective and technical design laid out in a PRD so there’s minimal mystery in what the LLM needs to build. 
+
+It’s nice to see features like handling implementation drift - that was a key thing I needed to solve when I was building my own custom “knowledge agents” 6 months ago. Since pre-planned tasks never stay perfectly aligned with where the implementation leads, you need robust handling to keep tasks on track and not to confuse future LLM sessions. 
+
+My approach was automated replanning - depending on the LLM to automatically reason about and improve task definitions after each step was completed. We’ll need super reliable tooling for this in order to reliably delegate larger projects to LLMs with less supervision overhead.   
+
+Check out Taskmaster: https://github.com/eyaltoledano/claude-task-master
+
+---
+
