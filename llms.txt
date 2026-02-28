@@ -1,23 +1,35 @@
 # Charlie Hulcher
 
-> Engineering leader and AI researcher. Founding engineer at Kindo, building agent orchestration infrastructure. Writing about AI systems, autonomous organizations, and the craft of engineering.
+> Engineering Leader and AI Researcher focused on building tech startup teams and exploring advanced AI applications.
 
 ## About
 - [Home](https://charlie.engineer/): Personal site — essays, notes, and project writeups
 - [Archive](https://charlie.engineer/archive/): All posts by date
 - [RSS Feed](https://charlie.engineer/index.xml): Full RSS feed
 
+## Sections
+- [Posts](https://charlie.engineer/posts/): All posts
+- [Essays](https://charlie.engineer/essays/): Long-form writing
+- [Notes](https://charlie.engineer/notes/): Short build logs and observations
+- [Links](https://charlie.engineer/links/): Curated external links with commentary
+
 ## Writing
-- [OrgLoop: Organization as Code](https://charlie.engineer/posts/orgloop-organization-as-code/): Open-source runtime for declarative AI agent event routing
-- [agentctl: Headless Orchestration for Coding Agents](https://charlie.engineer/posts/agentctl/): CLI that wraps coding agents for headless orchestration and supervision
-- [Coding is Creative](https://charlie.engineer/posts/coding-is-creative/): Programming as a creative outlet, compared to traditional artistic pursuit
-- [Grand Prize at LA Hacks](https://charlie.engineer/posts/la-hacks-tred/): Winning the largest hackathon in history with a VR treadmill
-- [Autonomous Hovercraft](https://charlie.engineer/posts/autonomous-hovercraft/): Award-winning autonomous hovercraft from UMD engineering competition
+- [agentctl: Headless Orchestration for Coding Agents](https://charlie.engineer/posts/agentctl/): A CLI that wraps coding agents for headless orchestration and multi-adapter supervision across Claude Code, Codex, and Gemini.
+- [OrgLoop: Organization as Code for Autonomous AI Organizations](https://charlie.engineer/posts/orgloop-organization-as-code/): OrgLoop is an open-source runtime that wires AI agents together with declarative event routing.
+- [Coding is Creative](https://charlie.engineer/posts/coding-is-creative/): Programming as a creative outlet can be understood by comparing it to traditional artistic pursuit.
+- [Grand Prize at LA Hacks - Virtual Reality Treadmill](https://charlie.engineer/posts/la-hacks-tred/): From 2014 - winning the largest hackathon in history.
+- [Autonomous Hovercraft](https://charlie.engineer/posts/autonomous-hovercraft/): From 2012 - Clark School of Engineering winning autonomous hovercraft.
 
 ## Topics
-- [AI](https://charlie.engineer/tags/ai/): AI systems, agents, infrastructure
-- [Engineering](https://charlie.engineer/tags/engineering/): Software engineering craft and practice
-- [Open Source](https://charlie.engineer/tags/open-source/): Open source projects and contributions
+- [programming](https://charlie.engineer/tags/programming/): 3 posts
+- [ai-agents](https://charlie.engineer/tags/ai-agents/): 2 posts
+- [arduino](https://charlie.engineer/tags/arduino/): 2 posts
+- [competition](https://charlie.engineer/tags/competition/): 2 posts
+- [infrastructure](https://charlie.engineer/tags/infrastructure/): 2 posts
+- [open-source](https://charlie.engineer/tags/open-source/): 2 posts
+- [engineering](https://charlie.engineer/tags/engineering/): 1 post
+- [org-design](https://charlie.engineer/tags/org-design/): 1 post
+- [thought](https://charlie.engineer/tags/thought/): 1 post
 
 ## Links
 - [GitHub](https://github.com/c-h-)

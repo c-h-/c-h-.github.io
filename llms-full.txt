@@ -1,6 +1,8 @@
 # Charlie Hulcher
 
-> Engineering leader and AI researcher. Founding engineer at Kindo, building agent orchestration infrastructure. Writing about AI systems, autonomous organizations, and the craft of engineering.
+> Engineering Leader and AI Researcher focused on building tech startup teams and exploring advanced AI applications.
+
+---
 
 ## agentctl: Headless Orchestration for Coding Agents
 
@@ -15,19 +17,19 @@ I built a CLI that wraps coding agents for headless orchestration.
 
 ## The friction of going headless
 
-I've been running coding agents headlessly as my primary way of writing software. Not as a side experiment, but as the default. And the friction points became obvious fast.
+I&#39;ve been running coding agents headlessly as my primary way of writing software. Not as a side experiment, but as the default. And the friction points became obvious fast.
 
-You launch a Claude Code session, move on to something else, and forget what it's doing. You launch another session in the same directory without realizing it, and they clobber each other's work. You hear about a new model or a new agent tool, but the switching cost is high enough that you just stick with what works. Why bother?
+You launch a Claude Code session, move on to something else, and forget what it&#39;s doing. You launch another session in the same directory without realizing it, and they clobber each other&#39;s work. You hear about a new model or a new agent tool, but the switching cost is high enough that you just stick with what works. Why bother?
 
-Then there's the supervision layer. I have AI agents that supervise my coding agents: launching sessions, checking progress, reacting when work finishes. For that to work, I need clean tooling that serves both humans and the agents doing the supervising.
+Then there&#39;s the supervision layer. I have AI agents that supervise my coding agents: launching sessions, checking progress, reacting when work finishes. For that to work, I need clean tooling that serves both humans and the agents doing the supervising.
 
-So I built agentctl. It's alpha, but a few folks have been daily driving it for weeks now.
+So I built agentctl. It&#39;s alpha, but a few folks have been daily driving it for weeks now.
 
 ## What it is
 
-agentctl is a lightweight CLI that wraps whatever coding agent you use and gives you a standard set of commands to manage headless sessions. It's not a replacement for `claude` or any other agent CLI. It's the supervisory layer that sits on top.
+agentctl is a lightweight CLI that wraps whatever coding agent you use and gives you a standard set of commands to manage headless sessions. It&#39;s not a replacement for `claude` or any other agent CLI. It&#39;s the supervisory layer that sits on top.
 
-The core idea: agentctl reads from native sources. It doesn't maintain its own session registry. The Claude Code adapter reads `~/.claude/projects/` and cross-references running processes. The Pi adapter reads Pi's session files. This means agentctl always reflects ground truth about what's actually running on your machine.
+The core idea: agentctl reads from native sources. It doesn&#39;t maintain its own session registry. The Claude Code adapter reads `~/.claude/projects/` and cross-references running processes. The Pi adapter reads Pi&#39;s session files. This means agentctl always reflects ground truth about what&#39;s actually running on your machine.
 
 ```bash
 npm install -g @orgloop/agentctl
@@ -45,16 +47,16 @@ agentctl list
 agentctl list -a
 
 # Check what an agent is doing
-agentctl peek <session-id>
+agentctl peek &lt;session-id&gt;
 
 # Launch a new session
-agentctl launch -p "Read the spec and implement phase 2"
+agentctl launch -p &#34;Read the spec and implement phase 2&#34;
 
 # Stop a session
-agentctl stop <session-id>
+agentctl stop &lt;session-id&gt;
 
 # Resume with new instructions
-agentctl resume <session-id> "fix the failing tests"
+agentctl resume &lt;session-id&gt; &#34;fix the failing tests&#34;
 ```
 
 Session IDs support prefix matching, so you only need enough characters to be unique.
@@ -66,7 +68,7 @@ One of the first problems I hit was accidentally launching two agents in the sam
 ```bash
 # Agents automatically lock their working directory on launch.
 # Manual locks work too, for when a human is working:
-agentctl lock ~/code/my-project --by charlie --reason "manual debugging"
+agentctl lock ~/code/my-project --by charlie --reason &#34;manual debugging&#34;
 
 # See all active locks
 agentctl locks
@@ -76,12 +78,12 @@ Manual locks let a human claim a directory and hold it as long as they want. No 
 
 ## Lifecycle hooks
 
-Hooks let you wire agentctl into the rest of your workflow. They're shell commands that fire at specific points in a session's lifecycle:
+Hooks let you wire agentctl into the rest of your workflow. They&#39;re shell commands that fire at specific points in a session&#39;s lifecycle:
 
 ```bash
-agentctl launch -p "implement feature X" \
-  --on-create "echo 'Session $AGENTCTL_SESSION_ID started'" \
-  --on-complete "npm test"
+agentctl launch -p &#34;implement feature X&#34; \
+  --on-create &#34;echo &#39;Session $AGENTCTL_SESSION_ID started&#39;&#34; \
+  --on-complete &#34;npm test&#34;
 ```
 
 Available hooks:
@@ -92,17 +94,17 @@ Available hooks:
 - `--post-merge`: fires after merge pushes or opens a PR. Notify, trigger CI.
 
 ```bash
-agentctl launch -p "implement feature X" \
+agentctl launch -p &#34;implement feature X&#34; \
   --worktree \
-  --on-create "cd $AGENTCTL_CWD && mise trust && yarn install" \
-  --on-complete "npm test"
+  --on-create &#34;cd $AGENTCTL_CWD &amp;&amp; mise trust &amp;&amp; yarn install&#34; \
+  --on-complete &#34;npm test&#34;
 ```
 
 Hook scripts receive context through environment variables: `AGENTCTL_SESSION_ID`, `AGENTCTL_CWD`, `AGENTCTL_ADAPTER`, `AGENTCTL_BRANCH`, and `AGENTCTL_EXIT_CODE`.
 
 ## The sweep pattern
 
-This is the feature I'm most excited about. You can launch the same task across different agents, models, and configurations, each in its own git worktree, fully independent.
+This is the feature I&#39;m most excited about. You can launch the same task across different agents, models, and configurations, each in its own git worktree, fully independent.
 
 Want to know if Claude Opus or Sonnet does a better job on your refactor? Or whether Codex handles it differently than Claude Code? One command:
 
@@ -111,7 +113,7 @@ agentctl launch \
   --adapter claude-code --model claude-opus-4-6 \
   --adapter claude-code --model claude-sonnet-4-5 \
   --adapter codex \
-  -p "refactor the auth module"
+  -p &#34;refactor the auth module&#34;
 ```
 
 Each gets its own branch and worktree. No conflicts. When they finish, you compare the results and pick the winner. The switching cost drops to nearly zero.
@@ -125,14 +127,14 @@ agentctl supports multiple agent runtimes through an adapter model:
 - **Claude Code** (default): reads from `~/.claude/projects/`, cross-references running processes.
 - **Codex CLI**: reads from `~/.codex/sessions/`, supports `codex exec` for headless mode.
 - **OpenCode**: reads from `~/.local/share/opencode/storage/`, supports `opencode run`.
-- **Pi**: reads from `~/.pi/agent/sessions/`, uses Pi's print mode for headless execution.
+- **Pi**: reads from `~/.pi/agent/sessions/`, uses Pi&#39;s print mode for headless execution.
 - **OpenClaw**: connects to the OpenClaw gateway via WebSocket RPC (read-only).
 
-Adding a new adapter means implementing the `AgentAdapter` interface. The CLI and daemon don't change.
+Adding a new adapter means implementing the `AgentAdapter` interface. The CLI and daemon don&#39;t change.
 
 ## Integration with OrgLoop
 
-agentctl fits into a larger picture. In my setup, it's one layer of three:
+agentctl fits into a larger picture. In my setup, it&#39;s one layer of three:
 
 | Layer | Role |
 |-------|------|
@@ -147,12 +149,12 @@ agentctl events --json
 ```
 
 ```json
-{"type":"session.stopped","adapter":"claude-code","sessionId":"abc123","timestamp":"2025-06-15T11:00:00.000Z","session":{...}}
+{&#34;type&#34;:&#34;session.stopped&#34;,&#34;adapter&#34;:&#34;claude-code&#34;,&#34;sessionId&#34;:&#34;abc123&#34;,&#34;timestamp&#34;:&#34;2025-06-15T11:00:00.000Z&#34;,&#34;session&#34;:{...}}
 ```
 
 OrgLoop consumes these events and routes them to reactions. A session completes, OrgLoop checks the result, and an OpenClaw agent decides what to do next: re-launch with different instructions, open a PR, or flag it for human review.
 
-This event-driven pattern means agentctl stays simple. It doesn't need to know what should happen when a session finishes. It just says what happened, and the layers above decide.
+This event-driven pattern means agentctl stays simple. It doesn&#39;t need to know what should happen when a session finishes. It just says what happened, and the layers above decide.
 
 ## Fuse timers
 
@@ -163,7 +165,7 @@ When running agents in worktree-per-branch workflows with Kind clusters, forgott
 agentctl fuses
 ```
 
-Small feature, but it's saved me from more than a few resource leaks.
+Small feature, but it&#39;s saved me from more than a few resource leaks.
 
 ## The daemon
 
@@ -178,7 +180,7 @@ Prometheus metrics are exposed at `localhost:9200/metrics` for monitoring active
 
 ## Where this is heading
 
-I believe headless coding agents will become the default path sooner than most people expect. Not that interactive sessions go away, but that the majority of code written will come from headless agents. agentctl is the supervision layer I needed to make that work, and it's a piece of what I've been building toward: organizations as code for autonomous intelligence scaling.
+I believe headless coding agents will become the default path sooner than most people expect. Not that interactive sessions go away, but that the majority of code written will come from headless agents. agentctl is the supervision layer I needed to make that work, and it&#39;s a piece of what I&#39;ve been building toward: organizations as code for autonomous intelligence scaling.
 
 Open source, MIT licensed. Try it out:
 
@@ -188,25 +190,6 @@ npm install -g @orgloop/agentctl
 
 GitHub: [github.com/orgloop/agentctl](https://github.com/orgloop/agentctl)
 
----
-
-## Autonomous Hovercraft
-
-URL: https://charlie.engineer/posts/autonomous-hovercraft/
-
-
-We won the University of Maryland Clark School of Engineering semester-long freshman competition, which puts all freshman engineering students into teams to navigate a course and retrieve a payload by building an autonomous hovercraft. I led our team of ten, and focused on circuitry and programming. From mechanical design, circuitry, and autonomous sensing, navigation, and actuation, our hovercraft was the fastest and completed the most objectives.
-
----
-
-## Grand Prize at LA Hacks - Virtual Reality Treadmill
-
-URL: https://charlie.engineer/posts/la-hacks-tred/
-
-
-We won the ["largest hackathon in history"](https://www.laweekly.com/ucla-hosts-biggest-hackathon-in-history/): the Grand Prize at LA Hacks. Built over 36 hours with our team of three, our treadmill captures user movement and translates it into motion in any virtual reality world. It was designed to be low-cost, widely compatible, and high-performance.
-
-As the user moves across the surface of the treadmill, low cost sensors activate from pressure, and an Arduino clusters the inputs to interpret the user's motion (direction and intent - standing, walking, running). Those clusters are sent as keyboard button presses to the computer running the virtual reality world. The user wears an Oculus Rift.
 
 ---
 
@@ -219,25 +202,25 @@ OrgLoop is an open-source runtime that wires your AI agents together with declar
 
 ## The Problem Nobody Warned Me About
 
-I'm running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.
+I&#39;m running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.
 
 The part that kept breaking was everything between agent sessions.
 
 A PR gets review comments at midnight. Nobody notices until I check in the morning. CI fails at 2am and sits red for hours. Claude Code finishes a feature overnight and the output just... sits there. A Linear ticket gets updated and no agent reacts because no agent is watching.
 
-I was the coordination layer. The human router. Checking GitHub, nudging agents, remembering what's in flight, bridging context between sessions. Every morning started with the same ritual: check which agents finished overnight, see if any PRs got stuck, notice the CI failure from 3am, remember what Linear tickets were in flight, figure out which Claude Code session needs relaunching.
+I was the coordination layer. The human router. Checking GitHub, nudging agents, remembering what&#39;s in flight, bridging context between sessions. Every morning started with the same ritual: check which agents finished overnight, see if any PRs got stuck, notice the CI failure from 3am, remember what Linear tickets were in flight, figure out which Claude Code session needs relaunching.
 
-I had scripts, cron jobs, LaunchAgent plists, custom pollers. A whole pile of glue code that sort of worked until it didn't. And it didn't scale. One agent, you can manage manually. Two, it's tight. At scale, you're not managing agents anymore. You're just running a very slow, error-prone event loop in your head.
+I had scripts, cron jobs, LaunchAgent plists, custom pollers. A whole pile of glue code that sort of worked until it didn&#39;t. And it didn&#39;t scale. One agent, you can manage manually. Two, it&#39;s tight. At scale, you&#39;re not managing agents anymore. You&#39;re just running a very slow, error-prone event loop in your head.
 
-The frustrating thing is that the agents' judgment is good enough. With the right context and the right instructions, they handle these situations well. The problem was getting the right event to the right agent at the right time with the right instructions. That's a systems problem, not an intelligence problem.
+The frustrating thing is that the agents&#39; judgment is good enough. With the right context and the right instructions, they handle these situations well. The problem was getting the right event to the right agent at the right time with the right instructions. That&#39;s a systems problem, not an intelligence problem.
 
 ## How I Got Here
 
 I kept trying to fix this inside the agents themselves. Bigger system prompts with more SOPs. More heartbeat checks. More agents, each watching a narrower slice. None of it stuck.
 
-The heartbeat approach is like having your team members wander around the building periodically, hoping they stumble across something that needs attention. Sometimes they do, sometimes they don't. Things that happen between patrols get missed.
+The heartbeat approach is like having your team members wander around the building periodically, hoping they stumble across something that needs attention. Sometimes they do, sometimes they don&#39;t. Things that happen between patrols get missed.
 
-Then I noticed this was the same shape as a problem infrastructure engineers solved years ago. We went from SSH'ing into servers and running commands to Infrastructure as Code. Terraform, CloudFormation, Pulumi. Declarative, version-controlled, reproducible. Nobody manages servers imperatively anymore.
+Then I noticed this was the same shape as a problem infrastructure engineers solved years ago. We went from SSH&#39;ing into servers and running commands to Infrastructure as Code. Terraform, CloudFormation, Pulumi. Declarative, version-controlled, reproducible. Nobody manages servers imperatively anymore.
 
 AI organizations are in that pre-IaC phase right now. Scripts, tribal knowledge, manual coordination. It works for one person running a few agents. It breaks down the moment you scale.
 
@@ -251,17 +234,17 @@ The whole thing fits in five concepts:
 
 **Actors** do work. An OpenClaw agent, a Claude Code instance, a Docker container. These are the things that respond.
 
-**Routes** wire sources to actors. When event X happens, wake actor Y with instructions Z. This is the topology of your organization, declared in YAML instead of living in scripts and someone's head.
+**Routes** wire sources to actors. When event X happens, wake actor Y with instructions Z. This is the topology of your organization, declared in YAML instead of living in scripts and someone&#39;s head.
 
-**Transforms** sit in the pipeline between source and actor. Filter bot noise, deduplicate events, enrich payloads with additional context. Mechanical steps that don't need judgment.
+**Transforms** sit in the pipeline between source and actor. Filter bot noise, deduplicate events, enrich payloads with additional context. Mechanical steps that don&#39;t need judgment.
 
 **Loggers** observe everything. Every event, every transform, every delivery, traced and recorded. When something goes wrong (it will), you can see exactly what happened.
 
-Read the YAML and you can see the entire operational topology of your organization. That's the point. No more guessing which script handles what, or whether anyone is watching CI.
+Read the YAML and you can see the entire operational topology of your organization. That&#39;s the point. No more guessing which script handles what, or whether anyone is watching CI.
 
 ## How It Works in Practice
 
-Here's a real route from my setup:
+Here&#39;s a real route from my setup:
 
 ```yaml
 routes:
@@ -272,30 +255,30 @@ routes:
     then:
       actor: engineering-agent
     with:
-      prompt_file: "./sops/pr-review.md"
+      prompt_file: &#34;./sops/pr-review.md&#34;
 ```
 
-When GitHub emits a PR review event, OrgLoop matches it to this route and wakes my engineering agent with a focused SOP specifically for handling PR reviews. The agent doesn't see CI failure instructions. It doesn't see the ticket triage playbook. One event, one focused instruction set.
+When GitHub emits a PR review event, OrgLoop matches it to this route and wakes my engineering agent with a focused SOP specifically for handling PR reviews. The agent doesn&#39;t see CI failure instructions. It doesn&#39;t see the ticket triage playbook. One event, one focused instruction set.
 
 This turned out to be a big deal. I had been cramming every possible instruction into one big system prompt, hoping the agent would apply the right SOP to whatever situation it found. Sometimes it did. Often it picked the wrong one, or tried to do three things at once.
 
-The route decides what context the agent needs, not the agent. If you've used OpenClaw Skills (focused context loaded on demand instead of everything crammed into MCP), this is the same pattern one layer up.
+The route decides what context the agent needs, not the agent. If you&#39;ve used OpenClaw Skills (focused context loaded on demand instead of everything crammed into MCP), this is the same pattern one layer up.
 
-Here's the part that makes it recursive: when an actor finishes, that completion is itself an event. My supervisor evaluates what Claude Code produced, decides whether to relaunch for another iteration or move on, and that decision fires its own event. The system sustains itself through continuous cycles.
+Here&#39;s the part that makes it recursive: when an actor finishes, that completion is itself an event. My supervisor evaluates what Claude Code produced, decides whether to relaunch for another iteration or move on, and that decision fires its own event. The system sustains itself through continuous cycles.
 
 The org loops.
 
 My current setup has nine active routes covering PR reviews, PR comments, CI failures, Linear ticket triage, Gmail triage, Claude Code supervision, cluster management, integration grooming, and weekly product updates. One daemon process replaced about a dozen scattered scripts and cron jobs.
 
-A concrete example of the loop in action: Claude Code finishes implementing a feature at 2am. That session completion fires an event. OrgLoop matches it to the supervisor route. The supervisor agent wakes up with an SOP that says "evaluate the output, check if the spec is complete, relaunch if there's more work." The supervisor decides to relaunch for test coverage. That relaunch fires another event. Claude Code runs tests, finishes, fires another completion event. The supervisor evaluates again, sees the spec is done, and updates the tracking ticket. All of this happened while I was asleep. I wake up to a finished feature with tests, committed and ready for review.
+A concrete example of the loop in action: Claude Code finishes implementing a feature at 2am. That session completion fires an event. OrgLoop matches it to the supervisor route. The supervisor agent wakes up with an SOP that says &#34;evaluate the output, check if the spec is complete, relaunch if there&#39;s more work.&#34; The supervisor decides to relaunch for test coverage. That relaunch fires another event. Claude Code runs tests, finishes, fires another completion event. The supervisor evaluates again, sees the spec is done, and updates the tracking ticket. All of this happened while I was asleep. I wake up to a finished feature with tests, committed and ready for review.
 
-Before OrgLoop, that same sequence would have stalled at step one. Claude Code finishes at 2am. Nobody notices until I check in the morning. I read the output, decide it needs tests, relaunch manually, wait, check again. Half a day lost to gaps that didn't need to exist.
+Before OrgLoop, that same sequence would have stalled at step one. Claude Code finishes at 2am. Nobody notices until I check in the morning. I read the output, decide it needs tests, relaunch manually, wait, check again. Half a day lost to gaps that didn&#39;t need to exist.
 
 ## Getting Started
 
 ```bash
 npm install -g @orgloop/cli
-mkdir my-org && cd my-org
+mkdir my-org &amp;&amp; cd my-org
 orgloop init
 npm install
 orgloop start
@@ -304,7 +287,7 @@ orgloop start
 `orgloop init` walks you through picking your sources and actors. Start simple. One source (maybe GitHub), one actor (your agent), one route. Get the loop running and watch events flow through.
 
 ```bash
-orgloop status    # See what's running
+orgloop status    # See what&#39;s running
 orgloop routes    # Visualize the routing topology
 orgloop logs      # Watch events in real time
 orgloop doctor    # Validate config and connectivity
@@ -314,19 +297,19 @@ Send a test event to see it work:
 
 ```bash
 curl -X POST http://localhost:4800/webhook/webhook \
-  -H "Content-Type: application/json" \
-  -d '{"type": "test", "message": "hello from orgloop"}'
+  -H &#34;Content-Type: application/json&#34; \
+  -d &#39;{&#34;type&#34;: &#34;test&#34;, &#34;message&#34;: &#34;hello from orgloop&#34;}&#39;
 ```
 
-That's the core loop: source emits, route matches, actor delivers, logger observes.
+That&#39;s the core loop: source emits, route matches, actor delivers, logger observes.
 
-When you're ready to scale up, there are pre-built connectors for GitHub, Linear, Claude Code, OpenClaw, Google Calendar, Gmail, Docker, and more. Each one is its own npm package (`@orgloop/connector-github`, `@orgloop/connector-linear`, etc.) so you only install what you need.
+When you&#39;re ready to scale up, there are pre-built connectors for GitHub, Linear, Claude Code, OpenClaw, Google Calendar, Gmail, Docker, and more. Each one is its own npm package (`@orgloop/connector-github`, `@orgloop/connector-linear`, etc.) so you only install what you need.
 
 ## The Vision: Your Organization as a Codebase
 
-The thing I keep coming back to is that the interesting problem isn't any individual agent. It's the system around them. Human organizations figured this out a long time ago. You don't make the organization work by making every employee perfect. You build processes, handoffs, escalation paths. The system compensates for individual unreliability.
+The thing I keep coming back to is that the interesting problem isn&#39;t any individual agent. It&#39;s the system around them. Human organizations figured this out a long time ago. You don&#39;t make the organization work by making every employee perfect. You build processes, handoffs, escalation paths. The system compensates for individual unreliability.
 
-AI agents forget, idle, rabbit-hole, drop context. That's fine. OrgLoop doesn't fix the agents. It makes the system reliable. Your org's operational topology lives in version control. You can review it, diff it, roll it back. New team member joins? They can read the YAML and understand how everything connects. You can `orgloop plan` before `orgloop start` and see exactly what will change, Terraform-style.
+AI agents forget, idle, rabbit-hole, drop context. That&#39;s fine. OrgLoop doesn&#39;t fix the agents. It makes the system reliable. Your org&#39;s operational topology lives in version control. You can review it, diff it, roll it back. New team member joins? They can read the YAML and understand how everything connects. You can `orgloop plan` before `orgloop start` and see exactly what will change, Terraform-style.
 
 Five primitives. One config file. You can read the whole thing and understand how your organization works. When something breaks, you can trace the event through the log and see exactly where it went wrong. When you want to add a new workflow, you add a route and an SOP. No new scripts, no new cron jobs.
 
@@ -334,40 +317,136 @@ I think every team running more than a couple of AI agents is going to need some
 
 ## Try It
 
-OrgLoop is open source (MIT), written in TypeScript, and running in production. It's early alpha days. The concepts have been running my engineering organization since January 2026, and the framework is being extracted and formalized from that system.
+OrgLoop is open source (MIT), written in TypeScript, and running in production. It&#39;s early alpha days. The concepts have been running my engineering organization since January 2026, and the framework is being extracted and formalized from that system.
 
-If you're running agents and feeling the coordination weight, give it a look.
+If you&#39;re running agents and feeling the coordination weight, give it a look.
 
 GitHub: [github.com/orgloop/orgloop](https://github.com/orgloop/orgloop)
 Docs: [orgloop.ai](https://orgloop.ai)
 npm: `npm install -g @orgloop/cli`
 
-If you try it or have questions, find me on X ([@chulcher](https://x.com/chulcher)) or open an issue on the repo. I'm genuinely curious what other people's agent topologies look like.
+If you try it or have questions, find me on X ([@chulcher](https://x.com/chulcher)) or open an issue on the repo. I&#39;m genuinely curious what other people&#39;s agent topologies look like.
+
 
 ---
 
-## Vibe Coding Meets Project Management
+## Coding is Creative
 
-URL: https://charlie.engineer/posts/task-master/
+URL: https://charlie.engineer/posts/coding-is-creative/
 
 
-> LLMs generate code quickly, but other traditions (sprint planning, code quality, review, and QA) struggle to keep pace, so shipping stalls. A broader diffusion of LLMs throughout the SDLC may elevate velocity across the board while mitigating novel risks. Here’s how Taskmaster helped us on that journey
+When you think about programming (or coding), you might not consider it to be a creative pursuit. That’s a viewpoint that I, as a coder, was very confused by, because I see it as one of the better avenues for creativity available today.
 
-There’s so much more to the SDLC (Software Development Lifecycle) than “vibe coding”. While LLMs can generate code tokens super quickly, bottlenecks emerge: if we're shipping code more quickly, does planning and roadmap need to speed up? And after we've written a ton of code with LLMs, how do we maintain code quality and confidence to ship through the release cycle? The good news is that today's LLMs appear capable of helping with those bottlenecks if we just build the harnesses for it.
+I hope this piece changes the way you think about programming and encourages further exploration.
 
-We tried out Taskmaster this week with Claude Code to bring task definition and organization to vibe coding. 
+&gt; Programming as a creative outlet can be understood by comparing it to traditional artistic pursuit.
 
-Taskmaster parses your product requirements into tasks that are pretty well tuned to what Claude 3.7 Sonnet can code end to end while under human supervision. 
+## Becoming an Artist
 
-Using taskmaster felt easier - it made task organization more consistent and higher quality without requiring as much prompt engineering expertise to achieve the same with manual prompting patterns. 
+### Starting with Charcoal
 
-It feels useful for significant features that are too much to give to Claude Code in one go, and where you already have a clear product objective and technical design laid out in a PRD so there’s minimal mystery in what the LLM needs to build. 
+Imagine you’re a new artist. You’ve decided to start drawing, and you want to start with charcoal.
 
-It’s nice to see features like handling implementation drift - that was a key thing I needed to solve when I was building my own custom “knowledge agents” 6 months ago. Since pre-planned tasks never stay perfectly aligned with where the implementation leads, you need robust handling to keep tasks on track and not to confuse future LLM sessions. 
+You feel the charcoal in your hands, the dusty but smooth texture, and the large thick pad of paper you’ll be applying it to. It may strike you that you have no idea how to use these tools to accurately represent the vision of artistic beauty inside you.
 
-My approach was automated replanning - depending on the LLM to automatically reason about and improve task definitions after each step was completed. We’ll need super reliable tooling for this in order to reliably delegate larger projects to LLMs with less supervision overhead.   
+You start the piece anyway. As you lay down strokes, discovering how different charcoal is from pencil, it really starts to sink that this is something completely new you’ll have to master. It really sinks in when you reflexively try to erase a stroke that’s inaccurate, laying down smudge wherever you spread the stroke out.
 
-Check out Taskmaster: https://github.com/eyaltoledano/claude-task-master
+You come to realize it will take years of difficult work, self-discipline and self-discovery, and learning from all kinds of different sources you never considered, before you’ll be able to use charcoal for creative expression that matches closely to your original intent.
+
+### The Artistic Problem
+
+When you started, you faced a problem as an artist: there was an original, artistic vision of beauty in your mind that you wanted to bring into the world. You found an outlet that can help you express that vision.
+
+But when you went to implement the vision in real form, you ran into new problems.
+
+Drawing with charcoal, or any means of expression in real life, comes with constraints, or rules, that must be mastered to most faithfully represent your artistic vision in the real world. Until you understand what the rules are, which rules to break, and when, you’ll create expressions that are inadequate compared to the mental vision (which is quite frustrating!).
+
+&gt; Tools and techniques exist to help the artist realize their creative vision, not as a means to create it for them.
+
+Artists are not stewards of the creations that their tools have wrought, but rather the creators themselves, aided by their tools.
+
+Even the most talented master of a form may still have reservations about the ability of their works to convey the meaning, intent, and emotion of the original vision.
+
+**So how does programming compare to this journey?**
 
 ---
+
+## Programming is Artistic Expression
+
+The exercise we just went through can be very reflective of a programmer’s journey towards mastery.
+
+A programmer faces a problem: some condition or process in the world is imperfect. It’s now the programmer’s job to envision possible solutions to that problem.
+
+The same as any other artist, the programmer faces very real rules that dictate what kind of visionary solutions are possible. The best, most creative and clever programmers oftentimes have a masterful understanding of the rules that dictate what is possible to enact in real form, and a mastery of the computer tools that offer a means of expressing that beautiful solution.
+
+What makes programming a particularly exciting and invigorating outlet for creative expression is actually the rules that govern it. When drawing with charcoal, there are limits on what you can do with a piece of charcoal and paper. Those limits do not limit the ability of an artist to create a perfect work of beauty; but rather pathway in which that beautiful work can be realized is in itself limited.
+
+In the same way, the laws of physics govern the ability of programmers to enact their solution to a problem. If there is no way to express logically a solution to an existing problem, then that problem is a poor fit for the physics-based logical world of programming.
+
+&gt; The trick is that most every problem can be solved through a creative logical expression.
+
+Where the art, beauty, and raw creativity of a visionary programmer shines through is in finding the simplest, most pure, most elegant logical expression which solves a problem.
+
+### One Step Further
+
+This comparison continues. When you think of paintings or other traditional forms, you quickly think of the categories and disciplines to which they belong.
+
+Surrealism, realism, cubism, modern, etc. are all movements that capture ideologies of how to best express visions in real forms.
+
+These forms can be powerfully perceived by others when expressed under an ideology that introduces purposeful new constraints on how vision is to be expressed. Artistic movements create paths toward repeatable practices that help artists express the essence of their vision, They help subdue the inadequacy of any particular medium impeding a vision’s accurate representation. In other words, ideologies from artistic movements aid artists in solving the problem of accurate expression and helps best use the strengths of imperfect mediums to express ideas.
+
+### Programmers have Movements, too
+
+Programmers are invigorated by co-existing and continuously evolving ideologies, tools, and technologies. They offer similar support to programmers as artistic movements offer support to traditional artists.
+
+Coders pick programming languages, patterns of logical expression, and high-level design patterns that help them envision and implement solutions to different kinds of problems. By learning some of these different tools and ideologies, the programmer becomes better equipped to represent their vision faithfully without being encumbered by the inadequacy of specific tools and techniques.
+
+Sometimes a modern art painting best expresses an abstract concept or emotion, sometimes realism magnifies and focuses the perceived world’s inherit beauty. Programmers pick their tooling and chosen ideologies for problems that help them best solve different kinds of problems.
+
+---
+
+## Why Choose To Program
+
+When most computer scientists and engineers first begin their journey, I doubt most consider the artistic aspect of the work, but rather the self-realizing power of the pursuit.
+
+&gt; &#34;Music can change the world because it can change people.” - Bono
+
+Similar words that an artist could say about the power of music or painting or other artistic expression can be said about programming.
+
+The distinction that’s differently attractive about engineering and programming is its ability to change the organization of human society, and thereby affect the senses and psychology of individuals vs the other way around for traditional art forms. The best traditional art galvanizes people to enact societal change as a result of their inner change whereas engineering affects the fabric of society itself directly through its implementation, and those changes can effect people’s psychology, if less directly.
+
+Software and engineering underpin the way that every human being lives their lives across the world. When architecture or banking software or other foundational underpinnings change, those changes quite literally change the world as it relies on those foundations.
+
+To have the power to even be a small part of societal change could be why you choose to be an engineer or programmer. It’s one of the most demanding and difficult jobs because of the physical limitations and worldly impact of the work. The same can be said about any artistic profession or pursuit; it’s only the kind of world change that is likely to result from the engineering pursuit that’s different.
+
+---
+
+## Reality
+
+Anecdotally, in my life I know this holds true. I think it is no coincidence that at UpChannel 3 of the first 5 engineers have musical backgrounds and are active creators.
+
+It is that curious spirit and desire to change the world through beautiful creative expression that drives the most creative people I know.
+
+So artists and programmers face very similar paths, have similar concepts of using ideology and mediums as different tools to solve problems, and the outcomes of their works are similar. I think it’s fair to say that programmers are artists, and their work requires similar talents.
+
+---
+
+## Grand Prize at LA Hacks - Virtual Reality Treadmill
+
+URL: https://charlie.engineer/posts/la-hacks-tred/
+
+
+We won the [&#34;largest hackathon in history&#34;](https://www.laweekly.com/ucla-hosts-biggest-hackathon-in-history/): the Grand Prize at LA Hacks. Built over 36 hours with our team of three, our treadmill captures user movement and translates it into motion in any virtual reality world. It was designed to be low-cost, widely compatible, and high-performance.
+
+As the user moves across the surface of the treadmill, low cost sensors activate from pressure, and an Arduino clusters the inputs to interpret the user&#39;s motion (direction and intent - standing, walking, running). Those clusters are sent as keyboard button presses to the computer running the virtual reality world. The user wears an Oculus Rift.
+
+
+---
+
+## Autonomous Hovercraft
+
+URL: https://charlie.engineer/posts/autonomous-hovercraft/
+
+
+We won the University of Maryland Clark School of Engineering semester-long freshman competition, which puts all freshman engineering students into teams to navigate a course and retrieve a payload by building an autonomous hovercraft. I led our team of ten, and focused on circuitry and programming. From mechanical design, circuitry, and autonomous sensing, navigation, and actuation, our hovercraft was the fastest and completed the most objectives.
 
