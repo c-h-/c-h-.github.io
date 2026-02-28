@@ -1,0 +1,25 @@
+# Charlie Hulcher
+
+> Engineering leader and AI researcher. Founding engineer at Kindo, building agent orchestration infrastructure. Writing about AI systems, autonomous organizations, and the craft of engineering.
+
+## About
+- [Home](https://charlie.engineer/): Personal site — essays, notes, and project writeups
+- [Archive](https://charlie.engineer/archive/): All posts by date
+- [RSS Feed](https://charlie.engineer/index.xml): Full RSS feed
+
+## Writing
+- [OrgLoop: Organization as Code](https://charlie.engineer/posts/orgloop-organization-as-code/): Open-source runtime for declarative AI agent event routing
+- [agentctl: Headless Orchestration for Coding Agents](https://charlie.engineer/posts/agentctl/): CLI that wraps coding agents for headless orchestration and supervision
+- [Coding is Creative](https://charlie.engineer/posts/coding-is-creative/): Programming as a creative outlet, compared to traditional artistic pursuit
+- [Grand Prize at LA Hacks](https://charlie.engineer/posts/la-hacks-tred/): Winning the largest hackathon in history with a VR treadmill
+- [Autonomous Hovercraft](https://charlie.engineer/posts/autonomous-hovercraft/): Award-winning autonomous hovercraft from UMD engineering competition
+
+## Topics
+- [AI](https://charlie.engineer/tags/ai/): AI systems, agents, infrastructure
+- [Engineering](https://charlie.engineer/tags/engineering/): Software engineering craft and practice
+- [Open Source](https://charlie.engineer/tags/open-source/): Open source projects and contributions
+
+## Links
+- [GitHub](https://github.com/c-h-)
+- [LinkedIn](https://linkedin.com/in/charliehulcher)
+- [X/Twitter](https://x.com/chulcher)
