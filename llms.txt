@@ -14,6 +14,7 @@
 - [Links](https://charlie.engineer/links/): Curated external links with commentary
 
 ## Writing
+- [Deep Retrieval: Organizational Understanding for AI Agents](https://charlie.engineer/posts/deep-retrieval/): I built a self-hosted retrieval system that lets AI agents produce comprehensive reports across an entire organization's history in about 7 minutes.
 - [agentctl: Headless Orchestration for Coding Agents](https://charlie.engineer/posts/agentctl/): A CLI that wraps coding agents for headless orchestration and multi-adapter supervision across Claude Code, Codex, and Gemini.
 - [OrgLoop: Organization as Code for Autonomous AI Organizations](https://charlie.engineer/posts/orgloop-organization-as-code/): OrgLoop is an open-source runtime that wires AI agents together with declarative event routing.
 - [Coding is Creative](https://charlie.engineer/posts/coding-is-creative/): Programming as a creative outlet can be understood by comparing it to traditional artistic pursuit.
@@ -21,14 +22,18 @@
 - [Autonomous Hovercraft](https://charlie.engineer/posts/autonomous-hovercraft/): From 2012 - Clark School of Engineering winning autonomous hovercraft.
 
 ## Topics
+- [ai-agents](https://charlie.engineer/tags/ai-agents/): 3 posts
 - [programming](https://charlie.engineer/tags/programming/): 3 posts
-- [ai-agents](https://charlie.engineer/tags/ai-agents/): 2 posts
 - [arduino](https://charlie.engineer/tags/arduino/): 2 posts
 - [competition](https://charlie.engineer/tags/competition/): 2 posts
 - [infrastructure](https://charlie.engineer/tags/infrastructure/): 2 posts
 - [open-source](https://charlie.engineer/tags/open-source/): 2 posts
+- [apple-silicon](https://charlie.engineer/tags/apple-silicon/): 1 post
 - [engineering](https://charlie.engineer/tags/engineering/): 1 post
+- [openclaw](https://charlie.engineer/tags/openclaw/): 1 post
 - [org-design](https://charlie.engineer/tags/org-design/): 1 post
+- [retrieval](https://charlie.engineer/tags/retrieval/): 1 post
+- [self-hosted](https://charlie.engineer/tags/self-hosted/): 1 post
 - [thought](https://charlie.engineer/tags/thought/): 1 post
 
 ## Links

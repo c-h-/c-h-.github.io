@@ -4,6 +4,111 @@
 
 ---
 
+## Deep Retrieval: Organizational Understanding for AI Agents
+
+URL: https://charlie.engineer/posts/deep-retrieval/
+
+
+![Deep Retrieval Architecture](retrieval-stack-v2-architecture.png)
+
+I built a retrieval system that lets my AI agents produce comprehensive reports across an entire organization&#39;s history in about 7 minutes.
+
+A 3-year-old company has thousands of Slack conversations, hundreds of Notion specs, years of Linear issues, and piles of email threads. Decisions get made in chat and forgotten. Context lives in one person&#39;s head until they leave. Specs reference other specs that reference conversations that happened before half the team was hired.
+
+No single person has read all of it. No single person could synthesize it. And when it comes time to plan something new, everyone works from a partial picture. The best you can do is ask around, hope someone remembers, and piece together whatever fragments surface.
+
+I kept running into this with my agents. An agent reviewing a PR needs to know what the team discussed about the feature three months ago. An agent planning work needs to know what was already tried and why it was abandoned. Without that context, agents produce plausible output that ignores the organization&#39;s actual history. They&#39;re smart but amnesiac.
+
+So I built a self-hosted retrieval stack. Two repos: one for local embeddings on Apple Silicon, one for syncing, indexing, and searching across SaaS sources. The whole thing runs on a Mac Studio with zero external dependencies.
+
+## Two layers
+
+There are two layers to how this works, and the distinction matters.
+
+### Layer 1: The retrieval primitive
+
+This is the foundation. An [OpenClaw](https://github.com/openclaw/openclaw) skill backed by a CLI tool called `retrieve`. It syncs data from Slack, Notion, Linear, and Gmail into local Markdown files, indexes them into SQLite with hybrid search, and serves results to agents.
+
+Day-to-day, agents use it for quick lookups:
+
+```bash
+retrieve search &#34;frontend traces not connecting to backend distributed traces through Grafana Faro RUM&#34; --index slack,notion,linear
+```
+
+That&#39;s not a keyword search. It&#39;s semantic. The richer and more contextual your query, the tighter the results. Vector similarity &#43; keyword matching &#43; recency boost, all running locally against SQLite indexes. Results come back with scores and source metadata.
+
+Managing the stack:
+
+```bash
+retrieve up          # starts embedding server &#43; sync scheduler
+retrieve doctor      # checks health: server, connectors, indexes, disk
+retrieve mirror sync # pulls incremental changes from all configured sources
+retrieve down        # stops everything
+```
+
+This layer handles the plumbing: SaaS connectors, incremental sync, crash-resumable state, content-addressed deduplication, and tens of millions of vectors across indexes.
+
+### Layer 2: Deep retrieval
+
+This is where it gets interesting. Deep retrieval isn&#39;t a single CLI command. It&#39;s an agent skill.
+
+An AI agent gets spawned with a research question. It doesn&#39;t run one search. It runs dozens of queries across every index, using both broad discovery queries and precise targeted queries. It follows threads it discovers. It cross-references what it finds in Slack against the Notion spec against the Linear ticket against the actual code. Then it synthesizes a grounded report with citations and saves it to Obsidian.
+
+You ask &#34;what&#39;s the state of observability and monitoring?&#34; and 7 minutes later you get a narrative: what was built, what was discussed but never built, where the gaps are, how thinking evolved over time, who worked on what, and why.
+
+An engineer on the team read the output. His feedback:
+
+&gt; &#34;This is amazing. I&#39;m unsure about complete accuracy, but this is an incredible consolidation of what I would guess is a vast majority of the context related to observability. There are likely some inaccuracies and slight adjustments that would need to be made, but it&#39;ll only get more and more accurate the less noise there is.&#34;
+
+And:
+
+&gt; &#34;I do think I&#39;ve identified some gaps, but this is still an incredible report that would be impossible for a human to reproduce manually.&#34;
+
+## The right bar
+
+Are the reports perfect? No. You might get a missing subsystem or a misattributed author. But that&#39;s the wrong bar.
+
+The right bar: can this unlock autonomous planning within your organization at high enough quality that work product moves forward sustainably?
+
+The answer is yes. These reports are more detailed and more comprehensive than any single engineer would have time or ability to produce on their own. They&#39;re the richest possible baseline for understanding where a technical system is today.
+
+Combine that with current product requirements and the actual codebase, and you have everything you need to spec what to build next, grounded in institutional context, legacy decisions, and the real history of why things are the way they are. That planning process is tolerant of minor gaps. What it&#39;s not tolerant of is starting from scratch, which is what most teams do every cycle.
+
+This is technology geared for real enterprise planning, not greenfield vibe coding.
+
+## The stack
+
+**[retrieval-skill](https://github.com/c-h-/retrieval-skill)** is the main tool. SaaS connectors (Slack, Notion, Linear, Gmail), incremental sync into local Markdown, indexing into SQLite with hybrid search, and the CLI. Connectors are pluggable. Sync runs incrementally on a schedule, so agents always have fresh context.
+
+**[octen-embeddings-server](https://github.com/c-h-/octen-embeddings-server)** runs [Octen-Embedding-8B](https://huggingface.co/chulcher/Octen-Embedding-8B-mlx) locally on Apple Silicon via MLX. 4096-dimensional embeddings, OpenAI-compatible API, no data leaves the machine. The model ranks #1 on MTEB/RTEB. At steady state it uses about 17GB of unified memory. Pre-converted MLX weights are on HuggingFace.
+
+## Beyond text
+
+The stack isn&#39;t limited to text. ColQwen2.5 multi-vector embeddings handle visual understanding. PDF pages and images get embedded as visual content, so agents can search across documents that aren&#39;t just text.
+
+I use this for a personal cooking workspace where scanned recipe pages are searchable by content, not filename. Same retrieval infrastructure, totally different domain. The pattern works wherever you need to deeply understand a corpus of connected information.
+
+## What this doesn&#39;t do
+
+It requires Apple Silicon. The embedding server runs on MLX, which needs Metal. You could swap in any OpenAI-compatible embedding server for other hardware, but the local setup needs Apple Silicon.
+
+The adapters cover what I use: Slack, Notion, Linear, Gmail. If your org runs Jira and Confluence, you&#39;d need to write connectors. The interface is straightforward, but it&#39;s work.
+
+Setup isn&#39;t one-click. You configure API credentials for each SaaS source, download the embedding model, and set up the pipeline. There&#39;s a quickstart guide now, but expect an afternoon.
+
+## The bigger picture
+
+Deep retrieval produces artifacts that didn&#39;t exist before and couldn&#39;t exist without this kind of infrastructure. A comprehensive, cited report on any topic across your entire organizational history. In 7 minutes. From a natural language question.
+
+It&#39;s not search. Search finds documents. This is organizational understanding: synthesizing context from dozens of sources into a coherent picture of what your organization knows about something. And that understanding is the foundation for everything that comes next.
+
+Both repos are MIT-licensed:
+- [retrieval-skill](https://github.com/c-h-/retrieval-skill)
+- [octen-embeddings-server](https://github.com/c-h-/octen-embeddings-server)
+
+
+---
+
 ## agentctl: Headless Orchestration for Coding Agents
 
 URL: https://charlie.engineer/posts/agentctl/
