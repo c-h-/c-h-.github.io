@@ -9,8 +9,6 @@
 URL: https://charlie.engineer/posts/enterprise-retrieval-strategy/
 
 
-![Enterprise Retrieval Strategy](enterprise-retrieval-strategy.png)
-
 Every engineering team running AI agents is about to build the same thing. Some already have.
 
 The pattern is obvious once you need it: connect to your corporate SaaS tools, extract the content, embed it, make it searchable. I [built exactly this](/posts/deep-retrieval/) for my own agent infrastructure. Two open-source repos and a Mac Studio. Slack, Notion, Linear, Gmail, all synced locally, indexed with hybrid semantic search, queryable by any agent in the fleet.
