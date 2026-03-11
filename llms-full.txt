@@ -11,6 +11,8 @@ URL: https://charlie.engineer/posts/asymmetric-autonomy/
 
 The Amazon outage reports do not read like &#34;AI caused an outage&#34; to me. They read like a destructive path had more autonomy than the recovery path behind it. If rollback and restore are not automated, the system breaks faster than it heals. Autonomous creation without autonomous recovery just shifts the bottleneck to where failure costs the most. Validation, rollback, and recovery can be autonomous too.
 
+**Source:** [Amazon orders 90-day reset after code mishaps cause millions of lost orders](https://www.businessinsider.com/amazon-tightens-code-controls-after-outages-including-one-ai-2026-3)
+
 
 ---
 
