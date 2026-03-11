@@ -6,7 +6,7 @@
 
 ## Asymmetric Autonomy
 
-URL: https://charlie.engineer/posts/asymmetric-autonomy/
+URL: https://charlie.engineer/links/asymmetric-autonomy/
 
 
 The Amazon outage reports do not read like &#34;AI caused an outage&#34; to me. They read like a destructive path had more autonomy than the recovery path behind it. If rollback and restore are not automated, the system breaks faster than it heals. Autonomous creation without autonomous recovery just shifts the bottleneck to where failure costs the most. Validation, rollback, and recovery can be autonomous too.
@@ -509,7 +509,7 @@ If you try it or have questions, find me on X ([@chulcher](https://x.com/chulche
 
 ## Coding is Creative
 
-URL: https://charlie.engineer/posts/coding-is-creative/
+URL: https://charlie.engineer/essays/coding-is-creative/
 
 
 When you think about programming (or coding), you might not consider it to be a creative pursuit. That’s a viewpoint that I, as a coder, was very confused by, because I see it as one of the better avenues for creativity available today.
