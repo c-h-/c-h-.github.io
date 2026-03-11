@@ -4,6 +4,16 @@
 
 ---
 
+## Asymmetric Autonomy
+
+URL: https://charlie.engineer/posts/asymmetric-autonomy/
+
+
+The Amazon outage reports do not read like &#34;AI caused an outage&#34; to me. They read like a destructive path had more autonomy than the recovery path behind it. If rollback and restore are not automated, the system breaks faster than it heals. Autonomous creation without autonomous recovery just shifts the bottleneck to where failure costs the most. Validation, rollback, and recovery can be autonomous too.
+
+
+---
+
 ## The Retrieval Paradox: Why Your Most Productive AI Tool Is Also Your Biggest Security Risk
 
 URL: https://charlie.engineer/posts/enterprise-retrieval-strategy/
