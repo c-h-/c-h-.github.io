@@ -11,8 +11,6 @@ URL: https://charlie.engineer/links/inference-is-a-supply-chain/
 
 If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.
 
-![Inference routing flow — local-first with cloud spillover](ohm-routing-flow.png)
-
 Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.
 
 To start creating optionality with LLM inference, start by standardizing recurring AI work into repeatable tasks rather than ad hoc. Then evaluate those tasks across models to find the best effectiveness per dollar. Then own as much of the inference path as you can.
