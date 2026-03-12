@@ -4,6 +4,28 @@
 
 ---
 
+## Inference Is a Supply Chain
+
+URL: https://charlie.engineer/links/inference-is-a-supply-chain/
+
+
+If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.
+
+Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.
+
+To start creating optionality with LLM inference, start by standardizing recurring AI work into repeatable tasks rather than ad hoc. Then evaluate those tasks across models to find the best effectiveness per dollar. Then own as much of the inference path as you can.
+
+I use OrgLoop to define the work and agentctl to compare models. For routing, I ended up building my own layer because local-first inference that spills to cloud when needed is just not a design goal of LiteLLM, AnyLLM, Helicone, or OpenRouter. I may open-source my &#34;inference marketplace&#34;, because I think that gap will matter to a lot more teams if local inference improves and online GPU capacity becomes scarce.
+
+Once you route by task rather than defaulting to frontier for everything, a surprising share of your traffic turns out to be moderate work that open weight handles well, better than you probably expect. Just like driving an F1 car to the post office would be overkill, using the most expensive frontier model at max reasoning for all your work is the same. Open weight models are not like Haiku, cheap but too limited to do anything you really want to do. They are genuinely capable, happen to be lower cost, and self-hostable.
+
+Cloud and proprietary frontier still matter for the hardest paths, but they should behave like burst capacity, not your only oxygen source.
+
+It may be worth hedging against the black swan of GPU compute supply getting interrupted. That could mean on-demand availability disappears, or that pricing rises with demand rather than falls, climbing above what your margins can support. If your business depends on inference and you have no hedge, what would you do?
+
+
+---
+
 ## Asymmetric Autonomy
 
 URL: https://charlie.engineer/links/asymmetric-autonomy/
