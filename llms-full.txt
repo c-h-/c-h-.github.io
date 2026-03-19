@@ -4,6 +4,30 @@
 
 ---
 
+## Agent Standards Are Converging
+
+URL: https://charlie.engineer/posts/agent-standards-are-converging/
+
+
+Anthropic&#39;s Dispatch preview, now part of Cowork, is interesting for what it makes accessible: persistent agents that hold context across tasks, accept work asynchronously, and stay available without requiring you to self-host infrastructure.
+
+OpenClaw pioneered this model and is already outpacing Linux itself in GitHub stars. Nvidia called out that growth at GTC, launching NemoClaw, the enterprise variant. Now Hermes, Manus My Computer, Perplexity Computer, and other platforms are racing to build similar systems. The agent deployment curve is accelerating faster than the coordination layer beneath it.
+
+That creates the next infrastructure challenge: how do all these agents communicate with each other?
+
+We already have shared standards for the layers below. Completions endpoints standardized LLM inference. MCP is converging for tool access. But agent-to-agent communication remained fragmented until recently.
+
+ACP is emerging as the shared standard for agent communication, stewarded by Linux Foundation. Google&#39;s A2A work merged in. Peter Steinberger&#39;s ACPx implementation is landing. The same pattern that made the LLM inference layer stronger is now repeating for agent coordination.
+
+The industry spent two years treating agents like smarter chat tabs. I think we&#39;re past that. The winning interface looks less like a session and more like a teammate: persistent, messageable, trusted with memory, able to work between interactions.
+
+Once agents can communicate through a shared protocol, the bottleneck shifts from &#34;can this agent do the work&#34; to &#34;how does work flow between agents.&#34; Standards make that coordination possible at scale.
+
+What I&#39;m watching for is whether adoption of these protocols keeps pace with deployment of the platforms. If the standards lag, we end up with isolated agent silos instead of an ecosystem. I&#39;m cautiously optimistic the pattern will hold.
+
+
+---
+
 ## Inference Is a Supply Chain
 
 URL: https://charlie.engineer/links/inference-is-a-supply-chain/
