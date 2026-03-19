@@ -25,6 +25,14 @@ Once agents can communicate through a shared protocol, the bottleneck shifts fro
 
 What I&#39;m watching for is whether adoption of these protocols keeps pace with deployment of the platforms. If the standards lag, we end up with isolated agent silos instead of an ecosystem. I&#39;m cautiously optimistic the pattern will hold.
 
+## Sources
+
+- Anthropic Dispatch (Latent Space): https://www.latent.space/p/ainews-claude-cowork-dispatch-anthropics
+- NemoClaw at GTC: https://nvidianews.nvidia.com/news/nvidia-announces-nemoclaw
+- Manus My Computer: https://manus.im/blog/manus-my-computer-desktop
+- ACP &#43; A2A merge (Linux Foundation): https://lfaidata.foundation/communityblog/2025/08/29/acp-joins-forces-with-a2a-under-the-linux-foundations-lf-ai-data/
+- ACPx: https://github.com/openclaw/acpx
+
 
 ---
 
