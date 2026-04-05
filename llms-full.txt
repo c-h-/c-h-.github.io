@@ -68,6 +68,8 @@ KL divergence: 0.034.
 
 That last number is the one that matters. KL divergence measures how different the modified model&#39;s output distribution is from the original. At 0.034, the change is near-zero. The model stopped refusing without measurably degrading at other tasks. It didn&#39;t get dumber. It got more cooperative.
 
+The abliterated model is [available on HuggingFace](https://huggingface.co/chulcher/gemma-4-e4b-abliterated) if you want to try it yourself.
+
 The search also surfaced a second Pareto-optimal candidate that prioritized capability preservation even more aggressively: slightly less refusal reduction, but even lower KL divergence. Having both options means you can choose your tradeoff based on what matters for your specific use case.
 
 ## How I Actually Did This
