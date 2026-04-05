@@ -1,41 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Ai on Charlie Hulcher</title>
-    <link>https://charlie.engineer/tags/ai/</link>
-    <description>Recent content in Ai on Charlie Hulcher</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-    
-    <copyright> 2026 Charlie Hulcher</copyright>
-    <lastBuildDate>Wed, 18 Mar 2026 00:00:00 +0000</lastBuildDate>
-    <ttl>60</ttl>
-    
-      <atom:link href="https://charlie.engineer/tags/ai/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Agent Standards Are Converging</title>
-      <link>https://charlie.engineer/posts/agent-standards-are-converging/</link>
-      <pubDate>Wed, 18 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/posts/agent-standards-are-converging/</guid>
-      <description>&lt;p&gt;Anthropic&amp;rsquo;s Dispatch preview, now part of Cowork, is interesting for what it makes accessible: persistent agents that hold context across tasks, accept work asynchronously, and stay available without requiring you to self-host infrastructure.&lt;/p&gt;
-&lt;p&gt;OpenClaw pioneered this model and is already outpacing Linux itself in GitHub stars. Nvidia called out that growth at GTC, launching NemoClaw, the enterprise variant. Now Hermes, Manus My Computer, Perplexity Computer, and other platforms are racing to build similar systems. The agent deployment curve is accelerating faster than the coordination layer beneath it.&lt;/p&gt;</description>
-      <category>ai,agents,standards</category>
-    </item>
-    
-    <item>
-      <title>Inference Is a Supply Chain</title>
-      <link>https://charlie.engineer/links/inference-is-a-supply-chain/</link>
-      <pubDate>Thu, 12 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/links/inference-is-a-supply-chain/</guid>
-      <description>&lt;p&gt;If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.&lt;/p&gt;
-&lt;p&gt;Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.&lt;/p&gt;</description>
-      <category>ai,inference,infrastructure</category>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ai on Charlie Hulcher</title><link>https://charlie.engineer/tags/ai/</link><description>Recent content in Ai on Charlie Hulcher</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright> 2026 Charlie Hulcher</copyright><lastBuildDate>Sun, 05 Apr 2026 00:00:00 +0000</lastBuildDate><ttl>60</ttl><atom:link href="https://charlie.engineer/tags/ai/index.xml" rel="self" type="application/rss+xml"/><item><title>Customizing an Open-Source Model Without an ML Team</title><link>https://charlie.engineer/posts/customizing-models-without-ml-team/</link><pubDate>Sun, 05 Apr 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/customizing-models-without-ml-team/</guid><description>&lt;p&gt;We all consume AI models through APIs. That works, but they don&amp;rsquo;t always behave how we want, and they&amp;rsquo;re often less efficient than they could be for the specific tasks we have.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve always assumed that doing something about that, actually customizing a model, required a specialized ML team and serious GPU infrastructure. Is that still true in 2026?&lt;/p&gt;
+&lt;p&gt;I wanted to find out. When Google released Gemma 4, I set up a hands-on survey: how far can one engineer get with open-source tools, local hardware, and AI agents helping navigate the process?&lt;/p&gt;</description><category>ai,model-training,openclaw,open-source,agents</category></item><item><title>Agent Standards Are Converging</title><link>https://charlie.engineer/posts/agent-standards-are-converging/</link><pubDate>Wed, 18 Mar 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/agent-standards-are-converging/</guid><description>&lt;p&gt;Anthropic&amp;rsquo;s Dispatch preview, now part of Cowork, is interesting for what it makes accessible: persistent agents that hold context across tasks, accept work asynchronously, and stay available without requiring you to self-host infrastructure.&lt;/p&gt;
+&lt;p&gt;OpenClaw pioneered this model and is already outpacing Linux itself in GitHub stars. Nvidia called out that growth at GTC, launching NemoClaw, the enterprise variant. Now Hermes, Manus My Computer, Perplexity Computer, and other platforms are racing to build similar systems. The agent deployment curve is accelerating faster than the coordination layer beneath it.&lt;/p&gt;</description><category>ai,agents,standards</category></item><item><title>Inference Is a Supply Chain</title><link>https://charlie.engineer/links/inference-is-a-supply-chain/</link><pubDate>Thu, 12 Mar 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/links/inference-is-a-supply-chain/</guid><description>&lt;p&gt;If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.&lt;/p&gt;
+&lt;p&gt;Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.&lt;/p&gt;</description><category>ai,inference,infrastructure</category></item></channel></rss>

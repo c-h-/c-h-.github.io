@@ -1,31 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Openclaw on Charlie Hulcher</title>
-    <link>https://charlie.engineer/tags/openclaw/</link>
-    <description>Recent content in Openclaw on Charlie Hulcher</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-    
-    <copyright> 2026 Charlie Hulcher</copyright>
-    <lastBuildDate>Mon, 02 Mar 2026 15:00:00 -0800</lastBuildDate>
-    <ttl>60</ttl>
-    
-      <atom:link href="https://charlie.engineer/tags/openclaw/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Deep Retrieval: Organizational Understanding for AI Agents</title>
-      <link>https://charlie.engineer/posts/deep-retrieval/</link>
-      <pubDate>Mon, 02 Mar 2026 15:00:00 -0800</pubDate>
-      
-      <guid>https://charlie.engineer/posts/deep-retrieval/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;retrieval-stack-v2-architecture.png&#34; alt=&#34;Deep Retrieval Architecture&#34;&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Openclaw on Charlie Hulcher</title><link>https://charlie.engineer/tags/openclaw/</link><description>Recent content in Openclaw on Charlie Hulcher</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright> 2026 Charlie Hulcher</copyright><lastBuildDate>Sun, 05 Apr 2026 00:00:00 +0000</lastBuildDate><ttl>60</ttl><atom:link href="https://charlie.engineer/tags/openclaw/index.xml" rel="self" type="application/rss+xml"/><item><title>Customizing an Open-Source Model Without an ML Team</title><link>https://charlie.engineer/posts/customizing-models-without-ml-team/</link><pubDate>Sun, 05 Apr 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/customizing-models-without-ml-team/</guid><description>&lt;p&gt;We all consume AI models through APIs. That works, but they don&amp;rsquo;t always behave how we want, and they&amp;rsquo;re often less efficient than they could be for the specific tasks we have.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;ve always assumed that doing something about that, actually customizing a model, required a specialized ML team and serious GPU infrastructure. Is that still true in 2026?&lt;/p&gt;
+&lt;p&gt;I wanted to find out. When Google released Gemma 4, I set up a hands-on survey: how far can one engineer get with open-source tools, local hardware, and AI agents helping navigate the process?&lt;/p&gt;</description><category>ai,model-training,openclaw,open-source,agents</category></item><item><title>Deep Retrieval: Organizational Understanding for AI Agents</title><link>https://charlie.engineer/posts/deep-retrieval/</link><pubDate>Mon, 02 Mar 2026 15:00:00 -0800</pubDate><guid>https://charlie.engineer/posts/deep-retrieval/</guid><description>&lt;p&gt;&lt;img src="retrieval-stack-v2-architecture.png" alt="Deep Retrieval Architecture"&gt;&lt;/p&gt;
 &lt;p&gt;I built a retrieval system that lets my AI agents produce comprehensive reports across an entire organization&amp;rsquo;s history in about 7 minutes.&lt;/p&gt;
-&lt;p&gt;A 3-year-old company has thousands of Slack conversations, hundreds of Notion specs, years of Linear issues, and piles of email threads. Decisions get made in chat and forgotten. Context lives in one person&amp;rsquo;s head until they leave. Specs reference other specs that reference conversations that happened before half the team was hired.&lt;/p&gt;</description>
-      <category>ai-agents,retrieval,self-hosted,apple-silicon,openclaw</category>
-    </item>
-    
-  </channel>
-</rss>
+&lt;p&gt;A 3-year-old company has thousands of Slack conversations, hundreds of Notion specs, years of Linear issues, and piles of email threads. Decisions get made in chat and forgotten. Context lives in one person&amp;rsquo;s head until they leave. Specs reference other specs that reference conversations that happened before half the team was hired.&lt;/p&gt;</description><category>ai-agents,retrieval,self-hosted,apple-silicon,openclaw</category></item></channel></rss>

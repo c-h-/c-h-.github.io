@@ -1,68 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Infrastructure on Charlie Hulcher</title>
-    <link>https://charlie.engineer/tags/infrastructure/</link>
-    <description>Recent content in Infrastructure on Charlie Hulcher</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    
-    
-    <copyright> 2026 Charlie Hulcher</copyright>
-    <lastBuildDate>Thu, 12 Mar 2026 00:00:00 +0000</lastBuildDate>
-    <ttl>60</ttl>
-    
-      <atom:link href="https://charlie.engineer/tags/infrastructure/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Inference Is a Supply Chain</title>
-      <link>https://charlie.engineer/links/inference-is-a-supply-chain/</link>
-      <pubDate>Thu, 12 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/links/inference-is-a-supply-chain/</guid>
-      <description>&lt;p&gt;If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.&lt;/p&gt;
-&lt;p&gt;Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.&lt;/p&gt;</description>
-      <category>ai,inference,infrastructure</category>
-    </item>
-    
-    <item>
-      <title>Asymmetric Autonomy</title>
-      <link>https://charlie.engineer/links/asymmetric-autonomy/</link>
-      <pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/links/asymmetric-autonomy/</guid>
-      <description>&lt;p&gt;The Amazon outage reports do not read like &amp;ldquo;AI caused an outage&amp;rdquo; to me. They read like a destructive path had more autonomy than the recovery path behind it. If rollback and restore are not automated, the system breaks faster than it heals. Autonomous creation without autonomous recovery just shifts the bottleneck to where failure costs the most. Validation, rollback, and recovery can be autonomous too.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Source:&lt;/strong&gt; &lt;a href=&#34;https://www.businessinsider.com/amazon-tightens-code-controls-after-outages-including-one-ai-2026-3&#34;&gt;Amazon orders 90-day reset after code mishaps cause millions of lost orders&lt;/a&gt;&lt;/p&gt;</description>
-      <category>agent-operations,infrastructure,autonomy</category>
-    </item>
-    
-    <item>
-      <title>agentctl: Headless Orchestration for Coding Agents</title>
-      <link>https://charlie.engineer/posts/agentctl/</link>
-      <pubDate>Thu, 26 Feb 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/posts/agentctl/</guid>
-      <description>&lt;p&gt;I built a CLI that wraps coding agents for headless orchestration.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;agent-ctl-architecture.png&#34; alt=&#34;agentctl architecture&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;agentctl-terminal.png&#34; alt=&#34;agentctl terminal&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;the-friction-of-going-headless&#34;&gt;The friction of going headless&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Infrastructure on Charlie Hulcher</title><link>https://charlie.engineer/tags/infrastructure/</link><description>Recent content in Infrastructure on Charlie Hulcher</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright> 2026 Charlie Hulcher</copyright><lastBuildDate>Thu, 12 Mar 2026 00:00:00 +0000</lastBuildDate><ttl>60</ttl><atom:link href="https://charlie.engineer/tags/infrastructure/index.xml" rel="self" type="application/rss+xml"/><item><title>Inference Is a Supply Chain</title><link>https://charlie.engineer/links/inference-is-a-supply-chain/</link><pubDate>Thu, 12 Mar 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/links/inference-is-a-supply-chain/</guid><description>&lt;p&gt;If your product needs GPUs to work, inference supply is not just a pricing problem. It is a business continuity problem.&lt;/p&gt;
+&lt;p&gt;Sarah Sachs had a strong post on optionality with frontier labs. I think the next step is treating GPU compute like a supply chain you secure. There is no law that says capacity expands on the schedule your roadmap needs, or that pricing falls on the schedule your margins need.&lt;/p&gt;</description><category>ai,inference,infrastructure</category></item><item><title>Asymmetric Autonomy</title><link>https://charlie.engineer/links/asymmetric-autonomy/</link><pubDate>Wed, 11 Mar 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/links/asymmetric-autonomy/</guid><description>&lt;p&gt;The Amazon outage reports do not read like &amp;ldquo;AI caused an outage&amp;rdquo; to me. They read like a destructive path had more autonomy than the recovery path behind it. If rollback and restore are not automated, the system breaks faster than it heals. Autonomous creation without autonomous recovery just shifts the bottleneck to where failure costs the most. Validation, rollback, and recovery can be autonomous too.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Source:&lt;/strong&gt; &lt;a href="https://www.businessinsider.com/amazon-tightens-code-controls-after-outages-including-one-ai-2026-3"&gt;Amazon orders 90-day reset after code mishaps cause millions of lost orders&lt;/a&gt;&lt;/p&gt;</description><category>agent-operations,infrastructure,autonomy</category></item><item><title>agentctl: Headless Orchestration for Coding Agents</title><link>https://charlie.engineer/posts/agentctl/</link><pubDate>Thu, 26 Feb 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/agentctl/</guid><description>&lt;p&gt;I built a CLI that wraps coding agents for headless orchestration.&lt;/p&gt;
+&lt;p&gt;&lt;img src="agent-ctl-architecture.png" alt="agentctl architecture"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="agentctl-terminal.png" alt="agentctl terminal"&gt;&lt;/p&gt;
+&lt;h2 id="the-friction-of-going-headless"&gt;The friction of going headless&lt;/h2&gt;
 &lt;p&gt;I&amp;rsquo;ve been running coding agents headlessly as my primary way of writing software. Not as a side experiment, but as the default. And the friction points became obvious fast.&lt;/p&gt;
-&lt;p&gt;You launch a Claude Code session, move on to something else, and forget what it&amp;rsquo;s doing. You launch another session in the same directory without realizing it, and they clobber each other&amp;rsquo;s work. You hear about a new model or a new agent tool, but the switching cost is high enough that you just stick with what works. Why bother?&lt;/p&gt;</description>
-      <category>ai-agents,open-source,infrastructure</category>
-    </item>
-    
-    <item>
-      <title>OrgLoop: Organization as Code for Autonomous AI Organizations</title>
-      <link>https://charlie.engineer/posts/orgloop-organization-as-code/</link>
-      <pubDate>Tue, 24 Feb 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://charlie.engineer/posts/orgloop-organization-as-code/</guid>
-      <description>&lt;p&gt;OrgLoop is an open-source runtime that wires your AI agents together with declarative event routing, so the organization keeps moving without you being the one holding it all together.&lt;/p&gt;
-&lt;h2 id=&#34;the-problem-nobody-warned-me-about&#34;&gt;The Problem Nobody Warned Me About&lt;/h2&gt;
-&lt;p&gt;I&amp;rsquo;m running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.&lt;/p&gt;</description>
-      <category>ai-agents,engineering,open-source,infrastructure,org-design</category>
-    </item>
-    
-  </channel>
-</rss>
+&lt;p&gt;You launch a Claude Code session, move on to something else, and forget what it&amp;rsquo;s doing. You launch another session in the same directory without realizing it, and they clobber each other&amp;rsquo;s work. You hear about a new model or a new agent tool, but the switching cost is high enough that you just stick with what works. Why bother?&lt;/p&gt;</description><category>ai-agents,open-source,infrastructure</category></item><item><title>OrgLoop: Organization as Code for Autonomous AI Organizations</title><link>https://charlie.engineer/posts/orgloop-organization-as-code/</link><pubDate>Tue, 24 Feb 2026 00:00:00 +0000</pubDate><guid>https://charlie.engineer/posts/orgloop-organization-as-code/</guid><description>&lt;p&gt;OrgLoop is an open-source runtime that wires your AI agents together with declarative event routing, so the organization keeps moving without you being the one holding it all together.&lt;/p&gt;
+&lt;h2 id="the-problem-nobody-warned-me-about"&gt;The Problem Nobody Warned Me About&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m running a lot of AI agents concurrently across multiple hosts. OpenClaw agents doing code reviews, Claude Code teams handling implementation, specialized agents for project management and triage. The agents themselves are genuinely capable. That part is mostly solved.&lt;/p&gt;</description><category>ai-agents,engineering,open-source,infrastructure,org-design</category></item></channel></rss>

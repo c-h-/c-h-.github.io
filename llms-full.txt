@@ -4,6 +4,109 @@
 
 ---
 
+## Customizing an Open-Source Model Without an ML Team
+
+URL: https://charlie.engineer/posts/customizing-models-without-ml-team/
+
+We all consume AI models through APIs. That works, but they don&#39;t always behave how we want, and they&#39;re often less efficient than they could be for the specific tasks we have.
+
+I&#39;ve always assumed that doing something about that, actually customizing a model, required a specialized ML team and serious GPU infrastructure. Is that still true in 2026?
+
+I wanted to find out. When Google released Gemma 4, I set up a hands-on survey: how far can one engineer get with open-source tools, local hardware, and AI agents helping navigate the process?
+
+## The Customization Spectrum
+
+Before getting into the experiment, it helps to map out the options. They sit on a spectrum of complexity and permanence.
+
+![Three Approaches to Model Customization](three-approaches.png)
+
+**Prompting** is where most people start. System prompts, few-shot examples, structured instructions. Zero infrastructure beyond the API. The ceiling is real, though: you can&#39;t prompt away behaviors that are baked into the weights.
+
+**RAG** gives the model access to external knowledge at inference time. Great for domain-specific answers, but it doesn&#39;t touch how the model reasons or what it&#39;s willing to do.
+
+**Fine-tuning** (SFT, RLHF, DPO) updates the model&#39;s weights using your data. This is where you start actually changing behavior, but it requires training datasets, GPU hours, and enough ML understanding to avoid making the model worse.
+
+**Directional ablation** is what I tested. It modifies the model&#39;s internal representations without retraining a single weight. You identify a behavioral direction in the model&#39;s activations (like &#34;tendency to refuse requests&#34;) and surgically adjust it. No training data, no gradient updates. Think of it as editing the model&#39;s personality rather than teaching it new tricks.
+
+**Pretraining** sits at the other extreme. Building a foundation model from scratch. Billions of dollars. Not what we&#39;re talking about.
+
+I was drawn to ablation because it promised meaningful behavioral change with modest compute and no data collection. That sounded testable.
+
+## Hardware Reality
+
+The setup: an NVIDIA DGX Spark with 128GB unified memory, running Gemma 4 at 4 billion parameters. Everything local. Zero cloud compute.
+
+Some rough numbers for intuition. A 4B parameter model in FP16 takes about 8GB just for the weights. That&#39;s the easy part. Training and optimization require storing gradients, optimizer states, and activations, which can balloon to 30 to 50GB depending on the approach. Directional ablation is lighter than full fine-tuning, but you still need headroom to load the model, run inference across hundreds of test prompts, and compute statistics across layers.
+
+The Spark&#39;s 128GB of unified memory handles all of this comfortably. Unified matters because you&#39;re not shuttling tensors between separate CPU and GPU memory pools, which is the bottleneck that kills most consumer setups when models get large.
+
+But you don&#39;t need a DGX Spark for this. A Mac Studio with 192GB unified memory would handle the same workload. An RTX 4090 with 24GB VRAM can run it with quantized models. Cloud A100 instances work at maybe $2 to 3 per hour. The point isn&#39;t that you need specific hardware. It&#39;s that &#34;one workstation&#34; has replaced &#34;datacenter cluster&#34; as the minimum viable setup for this kind of work.
+
+## The Experiment: Heretic and Directional Ablation
+
+The tool I reached for was [Heretic](https://github.com/severian42/Heretic), an open-source directional ablation framework.
+
+You give Heretic two sets of prompts. The first set (about 400 prompts) elicits the behavior you want to change. In my case, these were prompts that consistently triggered refusals: the model declining requests it deemed too sensitive, even when those requests were legitimate for my use case. The second set (another 400 prompts) elicits normal baseline behavior, representing the capabilities you want to preserve.
+
+Heretic uses these two sets to compute a &#34;behavioral direction&#34; in the model&#39;s activation space. It&#39;s finding the vector that best separates &#34;model refusing&#34; from &#34;model cooperating.&#34; Once you have that direction, you can scale how strongly it influences the model&#39;s outputs.
+
+The search uses [Optuna](https://optuna.org) with Tree-structured Parzen Estimation: 10 random exploration trials to map the space, then 20 guided trials that zero in on the most promising regions. Each trial picks which transformer layers to modify (focusing on attention output projections and MLP down projections, the weight matrices where behavioral patterns tend to concentrate) and how aggressively to scale the ablation.
+
+What makes this genuinely clever is the dual optimization. Each trial simultaneously measures two things: how much the target behavior changed (did refusals decrease?) and how much the model&#39;s general capabilities degraded (measured by KL divergence between the modified and original model&#39;s output distributions). You&#39;re searching for the Pareto frontier: maximum behavior change with minimum capability loss.
+
+### What Actually Happened
+
+![Before and After Ablation Results](before-after.png)
+
+Heretic ran 30 automated trials on the Spark. Each trial took about 12 minutes: load the ablation configuration, generate responses to the full test suite, score the outputs, compute divergence metrics. Total wall time was roughly six hours.
+
+Starting point: 41% of my test prompts triggered a refusal.
+
+After ablation: 2%.
+
+KL divergence: 0.034.
+
+That last number is the one that matters. KL divergence measures how different the modified model&#39;s output distribution is from the original. At 0.034, the change is near-zero. The model stopped refusing without measurably degrading at other tasks. It didn&#39;t get dumber. It got more cooperative.
+
+The search also surfaced a second Pareto-optimal candidate that prioritized capability preservation even more aggressively: slightly less refusal reduction, but even lower KL divergence. Having both options means you can choose your tradeoff based on what matters for your specific use case.
+
+## How I Actually Did This
+
+Here&#39;s the part that surprised me most.
+
+I&#39;m not an ML researcher. I have no background in mechanistic interpretability. I navigated this entire pipeline by working with AI agents, specifically [OpenClaw](https://github.com/openclaw/openclaw) running Claude Opus as the orchestration layer.
+
+The agent helped me understand Heretic&#39;s codebase and figure out the right configuration for Gemma 4 on the Spark. It wrote the launch scripts: prompt set formatting, Optuna search configuration, monitoring hooks. When I hit issues (and I hit plenty: CUDA toolkit version mismatches, memory allocation failures when the prompt batches were too large, Heretic config fields that had changed between versions), the agent debugged them. It wasn&#39;t guessing. It read error traces, checked the source code, and suggested specific fixes.
+
+During the six-hour run, the agent monitored progress via periodic checks, flagging completed trials and summarizing results as they came in. Watching the refusal rate drop trial by trial, in near-real-time, was one of the more satisfying parts of the whole experiment. After the run finished, the agent helped me interpret the Pareto frontier: which candidates traded off behavior change versus capability preservation, and why certain layer combinations worked better than others.
+
+The agents didn&#39;t replace domain expertise. They made it possible to work through the problem from first principles without needing the expertise up front. I still made the judgment calls: which behavior to target, how to construct the prompt sets, which candidate to select. But the mechanical work of navigating an unfamiliar ML toolchain, the agent handled that.
+
+This is a real shift. A year ago, I would have needed to either hire someone with this background or spend weeks learning the tooling myself. The agent compressed that timeline from weeks to hours, and the result was a properly optimized ablation, not a hacky approximation.
+
+## What I Took Away
+
+**The customization stack is real and accessible.** Open-source tools, workstation-class hardware, and AI agents create a practical path from &#34;I wish this model behaved differently&#34; to &#34;it does now.&#34; This isn&#39;t theoretical.
+
+**Behaviors are more modular than I expected.** You can find a specific behavioral direction (refusals), adjust it, and leave everything else intact. That suggests model behaviors are more separable than they seem from the outside. The implications go beyond refusal elimination: think about adjusting verbosity, tuning reasoning style, or changing response format preferences.
+
+**Hardware requirements are real but dropping.** You need meaningful compute, but &#34;meaningful&#34; now means a single workstation. That bar is still falling.
+
+**Evaluation is harder than modification.** Changing the model was surprisingly straightforward. Knowing whether the change was actually good, measuring degradation across diverse capabilities, testing edge cases, validating that you didn&#39;t break something subtle: that&#39;s the harder problem. The KL divergence metric gives me confidence, but a production deployment would need much more thorough evaluation.
+
+## What&#39;s Next
+
+This is Part 1 of a series on practical model customization. Directional ablation is one tool in the stack, and it happens to be one of the more accessible entry points because it doesn&#39;t need training data or gradient computation.
+
+Coming up: supervised fine-tuning for teaching models new behaviors, DPO for preference alignment, automated experimentation across the customization spectrum, and the evaluation problem (how do you know your customized model is actually better, not just different?).
+
+The broader question I&#39;m working through: how much of the model customization workflow can be agent-driven? The ablation experiment suggests more than I expected. I&#39;m curious whether that holds as the techniques get more complex.
+
+If you&#39;ve tried ablation, fine-tuning, or any other customization on your own hardware, I&#39;m curious what you found. Especially around evaluation: how do you actually know the change was good?
+
+
+---
+
 ## Agent Standards Are Converging
 
 URL: https://charlie.engineer/posts/agent-standards-are-converging/
