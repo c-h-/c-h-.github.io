@@ -74,7 +74,7 @@ The search also surfaced a second Pareto-optimal candidate that prioritized capa
 
 Here&#39;s the part that surprised me most.
 
-I&#39;m not an ML researcher. I have no background in mechanistic interpretability. I navigated this entire pipeline by working with AI agents, specifically [OpenClaw](https://github.com/openclaw/openclaw) running Claude Opus as the orchestration layer.
+I&#39;m not an ML researcher. I have no background in mechanistic interpretability. I navigated this entire pipeline by working with AI agents, specifically [OpenClaw](https://github.com/openclaw/openclaw) as the orchestration layer.
 
 The agent helped me understand Heretic&#39;s codebase and figure out the right configuration for Gemma 4 on the Spark. It wrote the launch scripts: prompt set formatting, Optuna search configuration, monitoring hooks. When I hit issues (and I hit plenty: CUDA toolkit version mismatches, memory allocation failures when the prompt batches were too large, Heretic config fields that had changed between versions), the agent debugged them. It wasn&#39;t guessing. It read error traces, checked the source code, and suggested specific fixes.
 
