@@ -44,7 +44,7 @@ But you don&#39;t need a DGX Spark for this. A Mac Studio with 192GB unified mem
 
 ## The Experiment: Heretic and Directional Ablation
 
-The tool I reached for was [Heretic](https://github.com/severian42/Heretic), an open-source directional ablation framework.
+The tool I reached for was [Heretic](https://github.com/p-e-w/heretic), an open-source directional ablation framework.
 
 You give Heretic two sets of prompts. The first set (about 400 prompts) elicits the behavior you want to change. In my case, these were prompts that consistently triggered refusals: the model declining requests it deemed too sensitive, even when those requests were legitimate for my use case. The second set (another 400 prompts) elicits normal baseline behavior, representing the capabilities you want to preserve.
 
