@@ -1,3 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Self-Hosted on Charlie Hulcher</title><link>https://charlie.engineer/tags/self-hosted/</link><description>Recent content in Self-Hosted on Charlie Hulcher</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright> 2026 Charlie Hulcher</copyright><lastBuildDate>Mon, 02 Mar 2026 15:00:00 -0800</lastBuildDate><ttl>60</ttl><atom:link href="https://charlie.engineer/tags/self-hosted/index.xml" rel="self" type="application/rss+xml"/><item><title>Deep Retrieval: Organizational Understanding for AI Agents</title><link>https://charlie.engineer/posts/deep-retrieval/</link><pubDate>Mon, 02 Mar 2026 15:00:00 -0800</pubDate><guid>https://charlie.engineer/posts/deep-retrieval/</guid><description>&lt;p&gt;&lt;img src="retrieval-stack-v2-architecture.png" alt="Deep Retrieval Architecture"&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Self-Hosted on Charlie Hulcher</title>
+    <link>https://charlie.engineer/tags/self-hosted/</link>
+    <description>Recent content in Self-Hosted on Charlie Hulcher</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+    
+    <copyright> 2026 Charlie Hulcher</copyright>
+    <lastBuildDate>Mon, 02 Mar 2026 15:00:00 -0800</lastBuildDate>
+    <ttl>60</ttl>
+    
+      <atom:link href="https://charlie.engineer/tags/self-hosted/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Deep Retrieval: Organizational Understanding for AI Agents</title>
+      <link>https://charlie.engineer/posts/deep-retrieval/</link>
+      <pubDate>Mon, 02 Mar 2026 15:00:00 -0800</pubDate>
+      
+      <guid>https://charlie.engineer/posts/deep-retrieval/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;retrieval-stack-v2-architecture.png&#34; alt=&#34;Deep Retrieval Architecture&#34;&gt;&lt;/p&gt;
 &lt;p&gt;I built a retrieval system that lets my AI agents produce comprehensive reports across an entire organization&amp;rsquo;s history in about 7 minutes.&lt;/p&gt;
-&lt;p&gt;A 3-year-old company has thousands of Slack conversations, hundreds of Notion specs, years of Linear issues, and piles of email threads. Decisions get made in chat and forgotten. Context lives in one person&amp;rsquo;s head until they leave. Specs reference other specs that reference conversations that happened before half the team was hired.&lt;/p&gt;</description><category>ai-agents,retrieval,self-hosted,apple-silicon,openclaw</category></item></channel></rss>
+&lt;p&gt;A 3-year-old company has thousands of Slack conversations, hundreds of Notion specs, years of Linear issues, and piles of email threads. Decisions get made in chat and forgotten. Context lives in one person&amp;rsquo;s head until they leave. Specs reference other specs that reference conversations that happened before half the team was hired.&lt;/p&gt;</description>
+      <category>ai-agents,retrieval,self-hosted,apple-silicon,openclaw</category>
+    </item>
+    
+  </channel>
+</rss>
